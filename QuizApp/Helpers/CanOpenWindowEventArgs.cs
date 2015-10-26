@@ -4,8 +4,8 @@ namespace QuizApp.Helpers
 {
     public class CanOpenWindowEventArgs : EventArgs
     {
-        public string WindowName { get; }
-        public bool CanOpen { get; }
+        public string WindowName { get; set; }
+        public bool CanOpen { get; set; }
 
         public CanOpenWindowEventArgs(string windowName, bool canOpen)
         {
