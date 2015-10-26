@@ -4,6 +4,7 @@ using Moq;
 using QuizApp.Model;
 using System.Collections.Generic;
 using System.Linq;
+using QuizApp.ViewModel;
 
 namespace QuizApp.Test
 {
@@ -103,6 +104,53 @@ namespace QuizApp.Test
             Assert.AreEqual(name,cat.Name);
             mock.Object.Edit(cat, new Category() { Name = "Cat 6" });
             Assert.AreNotEqual(name, cat.Name);
+        }
+
+        [TestMethod]
+        [TestCategory("QuizViewModel")]
+        public void QuizViewModel_AddQuiz_CannotAddExistingQuiz()
+        {
+            var quizRepoMock = new Mock<IRepository<Quiz>>();
+            var questionRepoMock = new Mock<IRepository<Question>>();
+            var categoryRepoMock = new Mock<IRepository<Category>>();
+
+            var cat1 = new Category() { Name = "Cat1" };
+
+            var categories = new[]
+            {
+                cat1
+            };
+
+            var questions = new[]
+            {
+                new Question() { Text = "Q1",
+                    Answers = new List<Answer>
+                {
+                    new Answer() { AnswerText ="Q1_A1" },
+                    new Answer() { AnswerText ="Q1_A2", IsCorrect = true },
+                }, Category = cat1 },
+                new Question() { Text = "Q2",
+                    Answers = new List<Answer>
+                {
+                    new Answer() { AnswerText ="Q2_A1" },
+                    new Answer() { AnswerText ="Q2_A2", IsCorrect = true },
+                }, Category = cat1}
+            };
+
+            var quizes = new List<Quiz>()
+            {
+                new Quiz() { QuizName = "Quiz A" }
+            };
+
+            categoryRepoMock.Setup(r => r.GetAllItems()).Returns(categories);
+            questionRepoMock.Setup(r => r.GetAllItems()).Returns(questions);
+            quizRepoMock.Setup(r => r.GetAllItems()).Returns(quizes);
+
+            quizRepoMock.Setup(r => r.Add(It.IsAny<Quiz>())).Callback<Quiz>(q => quizes.Add(q));
+
+            var qvm = new QuizViewModel(new Quiz()
+            { QuizName = "Quiz A", Questions = new List<QuizQuestion>() }, quizRepoMock.Object, questionRepoMock.Object, categoryRepoMock.Object);
+            
         }
     }
 }
