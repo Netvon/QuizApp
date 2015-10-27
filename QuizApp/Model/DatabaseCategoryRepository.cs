@@ -22,12 +22,7 @@ namespace QuizApp.Model
 
         public void Edit(Category oldItem, Category newItem)
         {
-            var cat = _database.Categories.FirstOrDefault(c => c.Name == oldItem.Name);
-
-            if (cat == null)
-                return;
-
-            cat.Name = newItem.Name;
+            throw new InvalidOperationException("Category can not be edited");
         }
 
         public IEnumerable<Category> GetAllItems()
@@ -37,7 +32,7 @@ namespace QuizApp.Model
 
         public void Remove(Category item)
         {
-            _database.Categories.Remove(item);
+            throw new InvalidOperationException("Category can not be removed");
         }
 
         public void Save()

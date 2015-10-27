@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using QuizApp.Model;
+using QuizApp.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -103,6 +104,27 @@ namespace QuizApp.Test
             Assert.AreEqual(name,cat.Name);
             mock.Object.Edit(cat, new Category() { Name = "Cat 6" });
             Assert.AreNotEqual(name, cat.Name);
+        }
+
+        [TestMethod]
+        [TestCategory("CategoryViewModel")]
+        //[ExpectedException(typeof(InvalidOperationException))]
+        public void CategoryViewModel_AddItemAlreadyExists()
+        {
+            //var mock = new Mock<IRepository<Category>>();
+
+            //var category = new Category() { Name = "Category 1" };
+
+            //var categoryViewModel = new CategoryViewModel(category, mock.Object);
+
+            //categoryViewModel.OnAddCategoryTest();
+            //categoryViewModel.OnAddCategoryTest();
+
+            //Assert.AreEqual(1, mock.Object.GetAllItems().Count());
+            ////nog te schrijven
+            ////1.toevoegen die bestaat kan niet
+            ////2. edit geeft exceptie
+            ////3. remove geeft exceptie
         }
     }
 }

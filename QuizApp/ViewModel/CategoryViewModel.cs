@@ -42,6 +42,12 @@ namespace QuizApp.ViewModel
             await _categoryRepo.SaveAsync();
         }
 
+        //test
+        public void OnAddCategoryTest()
+        {
+            _categoryRepo.Add(POCO);
+        }
+
         bool CanAddCategory()
         {
             if (string.IsNullOrEmpty(Name) || _categoryRepo.AsQueryable().Any(c => c.Name.Contains(Name)))
