@@ -5,6 +5,7 @@ using QuizApp.Model;
 using QuizApp.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
+using QuizApp.ViewModel;
 
 namespace QuizApp.Test
 {
@@ -107,24 +108,50 @@ namespace QuizApp.Test
         }
 
         [TestMethod]
-        [TestCategory("CategoryViewModel")]
-        //[ExpectedException(typeof(InvalidOperationException))]
-        public void CategoryViewModel_AddItemAlreadyExists()
+        [TestCategory("QuizViewModel")]
+        public void QuizViewModel_AddQuiz_CannotAddExistingQuiz()
         {
-            //var mock = new Mock<IRepository<Category>>();
+            var quizRepoMock = new Mock<IRepository<Quiz>>();
+            var questionRepoMock = new Mock<IRepository<Question>>();
+            var categoryRepoMock = new Mock<IRepository<Category>>();
 
-            //var category = new Category() { Name = "Category 1" };
+            var cat1 = new Category() { Name = "Cat1" };
 
-            //var categoryViewModel = new CategoryViewModel(category, mock.Object);
+            var categories = new[]
+            {
+                cat1
+            };
 
-            //categoryViewModel.OnAddCategoryTest();
-            //categoryViewModel.OnAddCategoryTest();
+            var questions = new[]
+            {
+                new Question() { Text = "Q1",
+                    Answers = new List<Answer>
+                {
+                    new Answer() { AnswerText ="Q1_A1" },
+                    new Answer() { AnswerText ="Q1_A2", IsCorrect = true },
+                }, Category = cat1 },
+                new Question() { Text = "Q2",
+                    Answers = new List<Answer>
+                {
+                    new Answer() { AnswerText ="Q2_A1" },
+                    new Answer() { AnswerText ="Q2_A2", IsCorrect = true },
+                }, Category = cat1}
+            };
 
-            //Assert.AreEqual(1, mock.Object.GetAllItems().Count());
-            ////nog te schrijven
-            ////1.toevoegen die bestaat kan niet
-            ////2. edit geeft exceptie
-            ////3. remove geeft exceptie
+            var quizes = new List<Quiz>()
+            {
+                new Quiz() { QuizName = "Quiz A" }
+            };
+
+            categoryRepoMock.Setup(r => r.GetAllItems()).Returns(categories);
+            questionRepoMock.Setup(r => r.GetAllItems()).Returns(questions);
+            quizRepoMock.Setup(r => r.GetAllItems()).Returns(quizes);
+
+            quizRepoMock.Setup(r => r.Add(It.IsAny<Quiz>())).Callback<Quiz>(q => quizes.Add(q));
+
+            var qvm = new QuizViewModel(new Quiz()
+            { QuizName = "Quiz A", Questions = new List<QuizQuestion>() }, quizRepoMock.Object, questionRepoMock.Object, categoryRepoMock.Object);
+            
         }
     }
 }
