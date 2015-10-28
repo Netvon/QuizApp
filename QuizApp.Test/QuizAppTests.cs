@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using QuizApp.Model;
+using QuizApp.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using QuizApp.ViewModel;
