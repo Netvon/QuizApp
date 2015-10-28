@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using QuizApp.Helpers;
 using QuizApp.Model;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,8 @@ namespace QuizApp.ViewModel
         IRepository<Quiz> _quizRepo;
         IRepository<Question> _questionRepo;
         IRepository<Category> _categoryRepo;
+
+        INotificationService _notificationService;
 
         QuestionViewModel _selectedDropdownQuestion;
         QuestionViewModel _selectedListQuestion;
@@ -64,7 +67,7 @@ namespace QuizApp.ViewModel
             }
         }
 
-        public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
+        //public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
 
         #region Commands
 
@@ -79,12 +82,14 @@ namespace QuizApp.ViewModel
         public ObservableCollection<QuestionViewModel> Questions { get; set; }
         #endregion
 
-        public QuizViewModel(Quiz poco, IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo) 
+        public QuizViewModel(Quiz poco, IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo, INotificationService notificationService) 
             : base(poco)
         {
             _quizRepo = quizRepo;
             _questionRepo = questionRepo;
             _categoryRepo = categoryRepo;
+
+            _notificationService = notificationService;
 
             Questions = new ObservableCollection<QuestionViewModel>();
 
@@ -93,12 +98,12 @@ namespace QuizApp.ViewModel
                 Questions.Add(new QuestionViewModel(item.Question, _questionRepo, _categoryRepo));
             }
 
-            AllQuestions = new ObservableCollection<QuestionViewModel>();
+            //AllQuestions = new ObservableCollection<QuestionViewModel>();
 
-            foreach (var item in questionRepo.GetAllItems())
-            {
-                AllQuestions.Add(new QuestionViewModel(item, questionRepo, categoryRepo));
-            }
+            //foreach (var item in questionRepo.GetAllItems())
+            //{
+            //    AllQuestions.Add(new QuestionViewModel(item, questionRepo, categoryRepo));
+            //}
 
             AddQuizCommand = new RelayCommand(OnAddQuiz, CanAddQuiz);
             RemoveQuizCommand = new RelayCommand(OnRemoveQuiz);
@@ -112,7 +117,9 @@ namespace QuizApp.ViewModel
         {
             _quizRepo.Add(POCO);
 
+            _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
         }
 
         bool CanAddQuiz()
@@ -135,8 +142,11 @@ namespace QuizApp.ViewModel
             POCO.Questions.Add(new QuizQuestion() { Question = SelectedDropdownQuestion.POCO, Quiz = POCO });
             Questions.Add(SelectedDropdownQuestion);
             SelectedDropdownQuestion = null;
+            AddQuizCommand.RaiseCanExecuteChanged();
 
+            _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
         }
 
         bool CanAddQuestion()
@@ -155,8 +165,11 @@ namespace QuizApp.ViewModel
             POCO.Questions.Remove(new QuizQuestion() { Question = SelectedListQuestion.POCO, Quiz = POCO });
             Questions.Remove(SelectedListQuestion);
             SelectedListQuestion = null;
+            AddQuizCommand.RaiseCanExecuteChanged();
 
+            _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
         }
 
         bool CanRemoveQuestion()
@@ -169,14 +182,18 @@ namespace QuizApp.ViewModel
 
         async void OnSaveQuiz()
         {
+            _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
         }
 
         async void OnRemoveQuiz()
         {
             _quizRepo.Remove(POCO);
 
+            _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
         }
     }
 }

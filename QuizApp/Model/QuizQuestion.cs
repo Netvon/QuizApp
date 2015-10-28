@@ -20,7 +20,7 @@ namespace QuizApp.Model
         [ForeignKey("GivenAnswer"), Column(Order = 3)]
         public string GivenAnswerText { get; set; }
 
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
         public Quiz Quiz { get; set; }
         public Answer GivenAnswer { get; set; }
 

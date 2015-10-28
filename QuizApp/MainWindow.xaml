@@ -10,13 +10,6 @@
         Title="MainWindow" Height="350" Width="525" 
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid>
-        <ListView ItemsSource="{Binding Quizes}"
-                  HorizontalContentAlignment="Stretch">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <v:QuizEditor/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Button Command="{Binding OpenEditorCommand}" Content="Open editor"/>
     </Grid>
 </Window>
