@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="QuizApp.View.QuizEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuizApp.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <DataTemplate x:Key="QuestionDataTemplate">
+            <local:QuestionListItem/>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel>
+                <Label Content="Naam" FontSize="10.667" Padding="2"/>
+                <TextBox Text="{Binding Name, Mode=TwoWay}" Margin="2,0"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="30"/>
+            </Grid.ColumnDefinitions>
+            <Button Command="{Binding AddQuestionCommand}" Grid.Column="1" Content="+" Margin="2,0"/>
+            <Button Command="{Binding RemoveQuestionCommand}" Grid.Column="2" Content="-" Margin="2,0"/>
+            <ComboBox ItemsSource="{Binding AllQuestions}" 
+                      SelectedItem="{Binding SelectedDropdownQuestion}" 
+                      ItemTemplate="{DynamicResource QuestionDataTemplate}"
+                      Grid.Column="0" Margin="2,0" VerticalContentAlignment="Center" />
+        </Grid>
+
+        <Grid Grid.Row="2" Margin="2">
+            <ListView ItemsSource="{Binding Questions}"
+                      ItemTemplate="{DynamicResource QuestionDataTemplate}"
+                      SelectedItem="{Binding SelectedListQuestion}"/>
+        </Grid>
+
+        <Grid Grid.Row="3">
+            <Button Command="{Binding SaveQuizCommand}" Content="Opslaan" HorizontalAlignment="Right" Margin="2,0"/>
+            <Button Command="{Binding RemoveQuizCommand}" Content="Verwijderen" HorizontalAlignment="Left" Margin="2,0"/>
+        </Grid>
+    </Grid>
+</UserControl>

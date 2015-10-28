@@ -4,15 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizApp"
+        xmlns:v="clr-namespace:QuizApp.View"
         x:Class="QuizApp.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" 
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Grid>
-        <ListView ItemsSource="{Binding Categories}">
+        <ListView ItemsSource="{Binding Quizes}"
+                  HorizontalContentAlignment="Stretch">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}"/>
+                    <v:QuizEditor/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
