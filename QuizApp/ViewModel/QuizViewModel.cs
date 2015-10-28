@@ -89,7 +89,9 @@ namespace QuizApp.ViewModel
             if (Questions.Count < 2 || Questions.Count > 10)
                 return false;
 
-            bool isPresent = _quizRepo.AsQueryable().FirstOrDefault(q => q.QuizName == Name) != null;       
+            var tst = _quizRepo.GetAllItems();
+
+            bool isPresent = _quizRepo.AsQueryable().Any(q => q.QuizName == Name);
 
             return !isPresent;
         }

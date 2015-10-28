@@ -145,12 +145,83 @@ namespace QuizApp.Test
             categoryRepoMock.Setup(r => r.GetAllItems()).Returns(categories);
             questionRepoMock.Setup(r => r.GetAllItems()).Returns(questions);
             quizRepoMock.Setup(r => r.GetAllItems()).Returns(quizes);
+            quizRepoMock.Setup(r => r.AsQueryable()).Returns(quizes.AsQueryable());
 
             quizRepoMock.Setup(r => r.Add(It.IsAny<Quiz>())).Callback<Quiz>(q => quizes.Add(q));
 
-            var qvm = new QuizViewModel(new Quiz()
-            { QuizName = "Quiz A", Questions = new List<QuizQuestion>() }, quizRepoMock.Object, questionRepoMock.Object, categoryRepoMock.Object);
-            
+
+            var quiz = new Quiz() { QuizName = "Quiz A" };
+            var qqL = new List<QuizQuestion>()
+            {
+                new QuizQuestion() { Quiz = quiz, Question = questions[0] },
+                new QuizQuestion() { Quiz = quiz, Question = questions[1] }
+            };
+            quiz.Questions = qqL;
+
+            var qvm = new QuizViewModel(quiz, quizRepoMock.Object, questionRepoMock.Object, categoryRepoMock.Object);
+
+
+            Assert.IsFalse(qvm.AddQuizCommand.CanExecute(null));
+        }
+
+        [TestMethod]
+        [TestCategory("QuizViewModel")]
+        public void QuizViewModel_AddQuiz_CanAddNewQuiz()
+        {
+            var quizRepoMock = new Mock<IRepository<Quiz>>();
+            var questionRepoMock = new Mock<IRepository<Question>>();
+            var categoryRepoMock = new Mock<IRepository<Category>>();
+
+            var cat1 = new Category() { Name = "Cat1" };
+
+            var categories = new[]
+            {
+                cat1
+            };
+
+            var questions = new[]
+            {
+                new Question() { Text = "Q1",
+                    Answers = new List<Answer>
+                {
+                    new Answer() { AnswerText ="Q1_A1" },
+                    new Answer() { AnswerText ="Q1_A2", IsCorrect = true },
+                }, Category = cat1 },
+                new Question() { Text = "Q2",
+                    Answers = new List<Answer>
+                {
+                    new Answer() { AnswerText ="Q2_A1" },
+                    new Answer() { AnswerText ="Q2_A2", IsCorrect = true },
+                }, Category = cat1}
+            };
+
+            var quizes = new List<Quiz>()
+            {
+                new Quiz() { QuizName = "Quiz A" }
+            };
+
+            categoryRepoMock.Setup(r => r.GetAllItems()).Returns(categories);
+            questionRepoMock.Setup(r => r.GetAllItems()).Returns(questions);
+            quizRepoMock.Setup(r => r.GetAllItems()).Returns(quizes);
+            quizRepoMock.Setup(r => r.AsQueryable()).Returns(quizes.AsQueryable());
+
+            quizRepoMock.Setup(r => r.Add(It.IsAny<Quiz>())).Callback<Quiz>(q => quizes.Add(q));
+
+
+            var quiz = new Quiz() { QuizName = "Quiz B" };
+            var qqL = new List<QuizQuestion>()
+            {
+                new QuizQuestion() { Quiz = quiz, Question = questions[0] },
+                new QuizQuestion() { Quiz = quiz, Question = questions[1] }
+            };
+            quiz.Questions = qqL;
+
+            var qvm = new QuizViewModel(quiz, quizRepoMock.Object, questionRepoMock.Object, categoryRepoMock.Object);
+
+
+            Assert.IsTrue(qvm.AddQuizCommand.CanExecute(null));
+            qvm.AddQuizCommand.Execute(null);
+            Assert.AreEqual(2, quizes.Count);
         }
     }
 }
