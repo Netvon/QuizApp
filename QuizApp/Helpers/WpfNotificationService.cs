@@ -8,8 +8,15 @@ namespace QuizApp.Helpers
 {
     public class WpfNotificationService : INotificationService
     {
+        public event EventHandler<MessageNotificationEventArgs> OnNewDisplayMessage;
         public event EventHandler<LoadingNotificationEventArgs> OnStartedLoading;
         public event EventHandler<LoadingNotificationEventArgs> OnStoppedLoading;
+
+        public void DisplayMessage(object token, string message)
+        {
+            var onNewDisplayMessage = OnNewDisplayMessage;
+            onNewDisplayMessage(this, new MessageNotificationEventArgs() { Token = token, Message = message });
+        }
 
         public void StartLoading(object token)
         {

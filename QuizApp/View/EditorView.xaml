@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:QuizApp.View"
         mc:Ignorable="d"
         Title="EditorView" Height="300" Width="300"
-        DataContext="{Binding Editor, Source={StaticResource Locator}}" Closed="Window_Closed">
+        DataContext="{Binding Editor, Source={StaticResource Locator}}" Closed="Window_Closed" MinWidth="300" MinHeight="300">
     <Window.Resources>
         <DataTemplate x:Key="QuizDataTemplate">
             <local:QuizListItem/>
@@ -14,36 +14,41 @@
     </Window.Resources>
 
     <Grid>
-        <TabControl Margin="6" SelectedIndex="{Binding SelectedTabIndex}">
+        <TabControl Margin="6" SelectedIndex="{Binding SelectedTabIndex}" Padding="0">
             <TabItem Header="Quiz">
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="38"/>
+                        <RowDefinition Height="41"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Margin="8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="40"/>
-                            <ColumnDefinition Width="40"/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="comboBox" ItemsSource="{Binding AllQuizes}" 
+                    <Border BorderThickness="0,0,0,1" BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox x:Name="comboBox" ItemsSource="{Binding AllQuizes}" 
                               SelectedItem="{Binding SelectedQuiz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                               ItemTemplate="{StaticResource QuizDataTemplate}"
                               Grid.Row="0"/>
-                        <Button Content="-" Margin="8,0,0,0" Grid.Column="1"
-                                Command="{Binding RemoveQuizCommand}"/>
-                        <Button Content="+" Margin="8,0,0,0" Grid.Column="2"
-                                Command="{Binding AddQuizCommand}"/>
-                    </Grid>
-                    
+                            <Button Content="-" Margin="8,0,0,0" Grid.Column="2"
+                                    Command="{Binding RemoveQuizCommand}" FontWeight="Bold" Padding="0"
+                                    ToolTip="Klik hier om de geselecteerde Quiz te verwijderen"/>
+                            <Button Content="+" Margin="8,0,0,0" Grid.Column="1"
+                                    Command="{Binding AddQuizCommand}" FontWeight="Bold" Padding="0"
+                                    ToolTip="Klik hier om een nieuwe Quiz toe te voegen"/>
+                        </Grid>
+                    </Border>
+
                     <local:QuizEditor QuestionSource="{Binding Editor.AllQuestions, Source={StaticResource Locator}}"
                                   Quiz="{Binding SelectedItem, 
                                                  ElementName=comboBox, 
                                                  UpdateSourceTrigger=PropertyChanged, 
                                                  Mode=TwoWay}"
-                                  Margin="8" Grid.Row="1"/>
+                                  Padding="8" Grid.Row="1" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+                                      IsEnabled="{Binding Editor.CanEditQuiz, Source={StaticResource Locator}}"/>
                 </Grid>
 
             </TabItem>
@@ -54,14 +59,17 @@
 
             </TabItem>
         </TabControl>
-        <Grid Visibility="{Binding LoadingVisibility}">
-            <Grid.Background>
-                <RadialGradientBrush RadiusX="1" RadiusY="1">
-                    <GradientStop Color="#BF000000" Offset="1"/>
-                    <GradientStop Color="#3F000000" Offset="0.263"/>
-                </RadialGradientBrush>
-            </Grid.Background>
-            <ProgressBar IsIndeterminate="True" VerticalAlignment="Center" Margin="8" MinHeight="20"/>
+        <Grid Visibility="{Binding LoadingVisibility, FallbackValue=Hidden}" Background="#BF000000">
+            <StackPanel VerticalAlignment="Center" Margin="8">
+                <Label Content="Even geduld..." Foreground="White" HorizontalAlignment="Center" FontSize="13.333" FontWeight="Bold"/>
+                <ProgressBar IsIndeterminate="True"  MinHeight="20"/>
+            </StackPanel>            
+        </Grid>
+        <Grid Visibility="{Binding NotificationVisibility, FallbackValue=Hidden}" Background="#BF000000">
+            <StackPanel VerticalAlignment="Center" Margin="8">
+                <Label Content="{Binding NotificationMessage}" Foreground="White" HorizontalAlignment="Center" FontSize="13.333" FontWeight="Bold"/>
+                <Button Content="Sluiten" Command="{Binding CloseNotificationCommand}" HorizontalAlignment="Center" Padding="8"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </Window>

@@ -19,6 +19,8 @@ namespace QuizApp.ViewModel
         IRepository<Question> _questionRepo;
         IRepository<Category> _categoryRepo;
         Visibility _loadingVisibility;
+        Visibility _notificationVisibility;
+        string _notificationMessage;
         int _selectedTabIndex;
 
         public ObservableCollection<QuizViewModel> AllQuizes { get; set; }
@@ -26,6 +28,7 @@ namespace QuizApp.ViewModel
 
         public RelayCommand RemoveQuizCommand { get; set; }
         public RelayCommand AddQuizCommand { get; set; }
+        public RelayCommand CloseNotificationCommand { get; set; }
 
         public Visibility LoadingVisibility
         {
@@ -40,6 +43,19 @@ namespace QuizApp.ViewModel
             }
         }
 
+        public Visibility NotificationVisibility
+        {
+            get
+            {
+                return _notificationVisibility;
+            }
+            set
+            {
+                _notificationVisibility = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public QuizViewModel SelectedQuiz
         {
             get
@@ -50,6 +66,8 @@ namespace QuizApp.ViewModel
             {
                 _selectedQuiz = value;
                 RaisePropertyChanged("SelectedQuiz");
+                RaisePropertyChanged("CanEditQuiz");
+                RemoveQuizCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -63,6 +81,27 @@ namespace QuizApp.ViewModel
             {
                 _selectedTabIndex = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public string NotificationMessage
+        {
+            get
+            {
+                return _notificationMessage;
+            }
+            set
+            {
+                _notificationMessage = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool CanEditQuiz
+        {
+            get
+            {
+                return AllQuizes.Contains(SelectedQuiz);
             }
         }
 
@@ -83,11 +122,14 @@ namespace QuizApp.ViewModel
 
             notificationService.OnStartedLoading += NotificationService_OnLoadingChanged;
             notificationService.OnStoppedLoading += NotificationService_OnLoadingChanged;
+            notificationService.OnNewDisplayMessage += NotificationService_OnNewDisplayMessage;
 
             LoadingVisibility = Visibility.Hidden;
+            NotificationVisibility = Visibility.Hidden;
 
             RemoveQuizCommand = new RelayCommand(OnRemoveQuiz, CanRemoveQuiz);
             AddQuizCommand = new RelayCommand(OnAddQuiz);
+            CloseNotificationCommand = new RelayCommand(OnCloseNotification);
 
             AllQuizes = new ObservableCollection<QuizViewModel>();
             AllQuestions = new ObservableCollection<QuestionViewModel>();
@@ -106,15 +148,22 @@ namespace QuizApp.ViewModel
             //SelectedTabIndex = 1;
         }
 
+        void OnCloseNotification()
+        {
+            NotificationVisibility = Visibility.Hidden;
+        }
+
         void OnAddQuiz()
         {
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, _notificationService);
             AllQuizes.Add(SelectedQuiz);
+            RaisePropertyChanged("CanEditQuiz");
         }
 
         bool CanRemoveQuiz()
         {
-            return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
+            return !string.IsNullOrEmpty(SelectedQuiz.Name);
+            //return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
         }
 
         void OnRemoveQuiz()
@@ -135,6 +184,16 @@ namespace QuizApp.ViewModel
                 LoadingVisibility = Visibility.Hidden;
             else
                 LoadingVisibility = Visibility.Visible;
+        }
+
+        void NotificationService_OnNewDisplayMessage(object sender, MessageNotificationEventArgs e)
+        {
+            if(e.Token as string == "QuizViewModel")
+            {
+                NotificationVisibility = Visibility.Visible;
+                NotificationMessage = e.Message;
+            }
+            
         }
     }
 }

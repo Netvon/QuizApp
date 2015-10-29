@@ -89,6 +89,7 @@
     <Compile Include="Helpers\INotificationService.cs" />
     <Compile Include="Helpers\IWindowService.cs" />
     <Compile Include="Helpers\LoadingNotificationEventArgs.cs" />
+    <Compile Include="Helpers\MessageNotificationEventArgs.cs" />
     <Compile Include="Helpers\WpfNotificationService.cs" />
     <Compile Include="Helpers\WpfWindowService.cs" />
     <Compile Include="Model\Answer.cs" />

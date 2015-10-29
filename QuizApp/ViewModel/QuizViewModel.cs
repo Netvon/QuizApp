@@ -68,6 +68,14 @@ namespace QuizApp.ViewModel
             }
         }
 
+        public bool ExistsInDatabase
+        {
+            get
+            {
+                return _quizRepo.AsQueryable().Any(q => q.QuizName == Name);
+            }
+        }
+
         //public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
 
         #region Commands
@@ -120,7 +128,10 @@ namespace QuizApp.ViewModel
 
             _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            AddQuizCommand.RaiseCanExecuteChanged();
+            RaisePropertyChanged("ExistsInDatabase");
             _notificationService.StopLoading("QuizViewModel");
+            _notificationService.DisplayMessage("QuizViewModel", "Quiz \"" + Name + "\" toegevoegd.");
         }
 
         bool CanAddQuiz()
@@ -144,6 +155,9 @@ namespace QuizApp.ViewModel
             Questions.Add(SelectedDropdownQuestion);
             SelectedDropdownQuestion = null;
             AddQuizCommand.RaiseCanExecuteChanged();
+
+            if (!ExistsInDatabase)
+                return;
 
             _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
@@ -169,6 +183,9 @@ namespace QuizApp.ViewModel
             Questions.Remove(SelectedListQuestion);
             SelectedListQuestion = null;
             AddQuizCommand.RaiseCanExecuteChanged();
+
+            if (!ExistsInDatabase)
+                return;
 
             _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();

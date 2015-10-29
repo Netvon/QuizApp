@@ -10,8 +10,11 @@ namespace QuizApp.Helpers
     {
         event EventHandler<LoadingNotificationEventArgs> OnStartedLoading;
         event EventHandler<LoadingNotificationEventArgs> OnStoppedLoading;
+        event EventHandler<MessageNotificationEventArgs> OnNewDisplayMessage;
 
         void StartLoading(object token);
         void StopLoading(object token);
+
+        void DisplayMessage(object token, string message);
     }
 }
