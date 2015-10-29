@@ -153,5 +153,30 @@ namespace QuizApp.Test
             { QuizName = "Quiz A", Questions = new List<QuizQuestion>() }, quizRepoMock.Object, questionRepoMock.Object, categoryRepoMock.Object);
             
         }
+
+        [TestMethod]
+        [TestCategory("CategoryViewModel")]
+        public void CategoryViewModel_AddCategory_CannotAddExisting()
+        {
+            var categories = new List<Category>()
+            {
+                new Category() { Name = "Category 1" },
+                new Category() { Name = "Category 2" },
+                new Category() { Name = "Category 3" },
+                
+            };
+
+            var cat = new Category() { Name = "Category 1" };
+            var mock = new Mock<IRepository<Category>>();
+
+            mock.Setup(r => r.GetAllItems()).Returns(categories);
+            mock.Setup(repo => repo.Add(It.IsAny<Category>())).Callback<Category>(c => categories.Add(c));
+
+            var catvm = new CategoryViewModel(cat, mock.Object);
+
+            Assert.AreEqual(3, mock.Object.GetAllItems().Count());
+           
+
+        }
     }
 }

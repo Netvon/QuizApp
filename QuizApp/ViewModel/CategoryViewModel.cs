@@ -45,7 +45,11 @@ namespace QuizApp.ViewModel
         //test
         public void OnAddCategoryTest()
         {
-            _categoryRepo.Add(POCO);
+            if (CanAddCategory())
+            {
+                _categoryRepo.Add(POCO);
+            }
+           
         }
 
         bool CanAddCategory()
