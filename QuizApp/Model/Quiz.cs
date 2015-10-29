@@ -15,5 +15,25 @@ namespace QuizApp.Model
         public string QuizName { get; set; }
         
         public virtual List<QuizQuestion> Questions { get; set; }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var q = obj as Quiz;
+
+            return q.QuizName == QuizName;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return QuizName.GetHashCode();
+        }
     }
 }

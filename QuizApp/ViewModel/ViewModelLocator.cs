@@ -45,6 +45,7 @@ namespace QuizApp.ViewModel
             ////}
 
             SimpleIoc.Default.Register<IWindowService, WpfWindowService>();
+            SimpleIoc.Default.Register<INotificationService, WpfNotificationService>();
 
             
 
@@ -59,6 +60,7 @@ namespace QuizApp.ViewModel
             SimpleIoc.Default.Register<IRepository<Quiz>, DatabaseQuizRepository>();
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<EditorViewModel>();
 
         }
 
@@ -69,7 +71,15 @@ namespace QuizApp.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public EditorViewModel Editor
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<EditorViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

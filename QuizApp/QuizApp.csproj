@@ -86,7 +86,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\CanOpenWindowEventArgs.cs" />
+    <Compile Include="Helpers\INotificationService.cs" />
     <Compile Include="Helpers\IWindowService.cs" />
+    <Compile Include="Helpers\LoadingNotificationEventArgs.cs" />
+    <Compile Include="Helpers\WpfNotificationService.cs" />
     <Compile Include="Helpers\WpfWindowService.cs" />
     <Compile Include="Model\Answer.cs" />
     <Compile Include="Model\Category.cs" />
@@ -99,12 +102,28 @@
     <Compile Include="Model\Quiz.cs" />
     <Compile Include="Model\QuizQuestion.cs" />
     <Compile Include="Model\QuizContext.cs" />
+    <Compile Include="ViewModel\EditorViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\POCOViewModel.cs" />
     <Compile Include="ViewModel\QuizViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\CategoryEditor.xaml.cs">
+      <DependentUpon>CategoryEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QuestionListItem.xaml.cs">
+      <DependentUpon>QuestionListItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QuizEditor.xaml.cs">
+      <DependentUpon>QuizEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\QuizListItem.xaml.cs">
+      <DependentUpon>QuizListItem.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -117,6 +136,26 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CategoryEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuestionListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuizEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\QuizListItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

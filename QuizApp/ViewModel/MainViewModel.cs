@@ -1,8 +1,10 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using QuizApp.Helpers;
 using QuizApp.Model;
 using System.Collections.ObjectModel;
+using System;
 
 namespace QuizApp.ViewModel
 {
@@ -10,13 +12,7 @@ namespace QuizApp.ViewModel
     {
         IWindowService _windowService;
 
-        public IRepository<Question> QuestionRepo { get; set; }
-        public IRepository<Category> CategoryRepo { get; set; }
-        public IRepository<Quiz> QuizRepo { get; set; }
-
-        public ObservableCollection<QuestionViewModel> Questions { get; set; }
-        public ObservableCollection<CategoryViewModel> Categories { get; set; }
-        public ObservableCollection<QuizViewModel> Quizes { get; set; }
+        public RelayCommand OpenEditorCommand { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -24,29 +20,26 @@ namespace QuizApp.ViewModel
         public MainViewModel(IWindowService windowService)
         {
             _windowService = windowService;
+            _windowService.OnCanOpenWindowChanged += WindowService_OnCanOpenWindowChanged;
 
-            QuestionRepo = SimpleIoc.Default.GetInstance<IRepository<Question>>();
-            CategoryRepo = SimpleIoc.Default.GetInstance<IRepository<Category>>();
-            QuizRepo = SimpleIoc.Default.GetInstance<IRepository<Quiz>>();
+            OpenEditorCommand = new RelayCommand(OnOpenEditor, CanOpenEditor);
+        }
 
-            Categories = new ObservableCollection<CategoryViewModel>();
-            Questions = new ObservableCollection<QuestionViewModel>();
-            Quizes = new ObservableCollection<QuizViewModel>();
+        void WindowService_OnCanOpenWindowChanged(object sender, CanOpenWindowEventArgs e)
+        {
+            if(e.WindowName.Contains("EditorView"))
+                OpenEditorCommand.RaiseCanExecuteChanged();
+        }
 
-            foreach (var cat in CategoryRepo.GetAllItems())
-            {
-                Categories.Add(new CategoryViewModel(cat, CategoryRepo));
-            }
+        void OnOpenEditor()
+        {
+            _windowService.OpenWindow("EditorView");
+            OpenEditorCommand.RaiseCanExecuteChanged();
+        }
 
-            foreach (var question in QuestionRepo.GetAllItems())
-            {
-                Questions.Add(new QuestionViewModel(question, QuestionRepo, CategoryRepo));
-            }
-
-            foreach (var quiz in QuizRepo.GetAllItems())
-            {
-                Quizes.Add(new QuizViewModel(quiz, QuizRepo, QuestionRepo, CategoryRepo));
-            }
+        bool CanOpenEditor()
+        {
+            return _windowService.CanOpenWindow("EditorView");
         }
     }
 }

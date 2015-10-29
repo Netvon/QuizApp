@@ -20,9 +20,30 @@ namespace QuizApp.Model
         [ForeignKey("GivenAnswer"), Column(Order = 3)]
         public string GivenAnswerText { get; set; }
 
-        public Question Question { get; set; }
+        public virtual Question Question { get; set; }
         public Quiz Quiz { get; set; }
         public Answer GivenAnswer { get; set; }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+
+            var qq = obj as QuizQuestion;
+
+            return qq.Question == Question && 
+                   qq.Quiz == Quiz;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return (Quiz.GetHashCode() + Question.GetHashCode()).GetHashCode();
+        }
 
     }
 }

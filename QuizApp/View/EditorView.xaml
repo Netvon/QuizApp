@@ -1,0 +1,34 @@
+﻿<Window x:Class="QuizApp.View.EditorView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuizApp.View"
+        mc:Ignorable="d"
+        Title="EditorView" Height="300" Width="300"
+        DataContext="{Binding Editor, Source={StaticResource Locator}}" Closed="Window_Closed">
+    <Grid>
+        <TabControl Margin="6">
+            <TabItem Header="Quiz">
+                <local:QuizEditor QuestionSource="{Binding AllQuestions}"
+                                  Quiz="{Binding SelectedQuiz}"
+                                  Margin="8"/>
+            </TabItem>
+            <TabItem Header="Vragen">
+
+            </TabItem>
+            <TabItem Header="Categoriën">
+
+            </TabItem>
+        </TabControl>
+        <Grid Visibility="{Binding LoadingVisibility}">
+            <Grid.Background>
+                <RadialGradientBrush RadiusX="1" RadiusY="1">
+                    <GradientStop Color="#BF000000" Offset="1"/>
+                    <GradientStop Color="#3F000000" Offset="0.263"/>
+                </RadialGradientBrush>
+            </Grid.Background>
+            <ProgressBar IsIndeterminate="True" VerticalAlignment="Center" Margin="8" MinHeight="20"/>
+        </Grid>
+    </Grid>
+</Window>

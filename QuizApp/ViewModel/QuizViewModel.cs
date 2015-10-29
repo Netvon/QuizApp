@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using QuizApp.Helpers;
 using QuizApp.Model;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,11 @@ namespace QuizApp.ViewModel
         IRepository<Quiz> _quizRepo;
         IRepository<Question> _questionRepo;
         IRepository<Category> _categoryRepo;
+
+        INotificationService _notificationService;
+
+        QuestionViewModel _selectedDropdownQuestion;
+        QuestionViewModel _selectedListQuestion;
         #endregion
 
         #region Properties
@@ -29,11 +35,39 @@ namespace QuizApp.ViewModel
             {
                 POCO.QuizName = value;
                 RaisePropertyChanged();
+                AddQuizCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public QuestionViewModel SelectedQuestion { get; set; }
-        public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
+        public QuestionViewModel SelectedDropdownQuestion
+        {
+            get
+            {
+                return _selectedDropdownQuestion;
+            }
+            set
+            {
+                _selectedDropdownQuestion = value;
+                RaisePropertyChanged();
+                AddQuestionCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public QuestionViewModel SelectedListQuestion
+        {
+            get
+            {
+                return _selectedListQuestion;
+            }
+            set
+            {
+                _selectedListQuestion = value;
+                RaisePropertyChanged();
+                RemoveQuestionCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        //public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
 
         #region Commands
 
@@ -48,12 +82,14 @@ namespace QuizApp.ViewModel
         public ObservableCollection<QuestionViewModel> Questions { get; set; }
         #endregion
 
-        public QuizViewModel(Quiz poco, IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo) 
+        public QuizViewModel(Quiz poco, IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo, INotificationService notificationService) 
             : base(poco)
         {
             _quizRepo = quizRepo;
             _questionRepo = questionRepo;
             _categoryRepo = categoryRepo;
+
+            _notificationService = notificationService;
 
             Questions = new ObservableCollection<QuestionViewModel>();
 
@@ -62,43 +98,102 @@ namespace QuizApp.ViewModel
                 Questions.Add(new QuestionViewModel(item.Question, _questionRepo, _categoryRepo));
             }
 
-            AllQuestions = new ObservableCollection<QuestionViewModel>();
+            //AllQuestions = new ObservableCollection<QuestionViewModel>();
 
-            foreach (var item in questionRepo.GetAllItems())
-            {
-                AllQuestions.Add(new QuestionViewModel(item, questionRepo, categoryRepo));
-            }
+            //foreach (var item in questionRepo.GetAllItems())
+            //{
+            //    AllQuestions.Add(new QuestionViewModel(item, questionRepo, categoryRepo));
+            //}
 
             AddQuizCommand = new RelayCommand(OnAddQuiz, CanAddQuiz);
-            //RemoveQuizCommand = new RelayCommand(OnRemoveQuiz, CanRemoveQuiz);
-            //SaveQuizCommand = new RelayCommand(OnSaveQuiz, CanSaveQuiz);
-            //AddQuestionCommand = new RelayCommand(OnAddQuestion, CanAddQuestion);
-            //RemoveQuestionCommand = new RelayCommand(OnRemoveQuestion, CanRemoveQuestion);
+            RemoveQuizCommand = new RelayCommand(OnRemoveQuiz);
+            SaveQuizCommand = new RelayCommand(OnSaveQuiz);
+            AddQuestionCommand = new RelayCommand(OnAddQuestion, CanAddQuestion);
+            RemoveQuestionCommand = new RelayCommand(OnRemoveQuestion, CanRemoveQuestion);
 
         }
 
-        public async void OnAddQuiz()
+        async void OnAddQuiz()
         {
             _quizRepo.Add(POCO);
 
+            _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
         }
 
-        public bool CanAddQuiz()
+        bool CanAddQuiz()
         {
             if (Questions.Count < 2 || Questions.Count > 10)
                 return false;
 
-            bool isPresent = _quizRepo.AsQueryable().FirstOrDefault(q => q.QuizName == Name) != null;       
+            var tst = _quizRepo.GetAllItems();
+
+            bool isPresent = _quizRepo.AsQueryable().Any(q => q.QuizName == Name);
 
             return !isPresent;
         }
 
-        //public async void OnAddQuestion()
-        //{
-        //    POCO.Questions.Add(new QuizQuestion() { Question = SelectedQuestion.POCO, Quiz = POCO });
+        async void OnAddQuestion()
+        {
+            if (SelectedDropdownQuestion == null)
+                return;
 
-        //    await _quizRepo.SaveAsync();
-        //}
+            POCO.Questions.Add(new QuizQuestion() { Question = SelectedDropdownQuestion.POCO, Quiz = POCO });
+            Questions.Add(SelectedDropdownQuestion);
+            SelectedDropdownQuestion = null;
+            AddQuizCommand.RaiseCanExecuteChanged();
+
+            _notificationService.StartLoading("QuizViewModel");
+            await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
+        }
+
+        bool CanAddQuestion()
+        {
+            if (SelectedDropdownQuestion == null)
+                return false;
+
+            if (Questions.Count >= 10 || POCO.Questions.Any(q => q.QuestionID == SelectedDropdownQuestion.POCO.QuestionID))
+                return false;
+
+            return true;
+        }
+
+        async void OnRemoveQuestion()
+        {
+            POCO.Questions.Remove(new QuizQuestion() { Question = SelectedListQuestion.POCO, Quiz = POCO });
+            Questions.Remove(SelectedListQuestion);
+            SelectedListQuestion = null;
+            AddQuizCommand.RaiseCanExecuteChanged();
+
+            _notificationService.StartLoading("QuizViewModel");
+            await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
+        }
+
+        bool CanRemoveQuestion()
+        {
+            if (POCO.Questions.Count <= 2)
+                return false;
+
+            return SelectedListQuestion != null;
+        }
+
+        async void OnSaveQuiz()
+        {
+            _notificationService.StartLoading("QuizViewModel");
+            await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
+        }
+
+        async void OnRemoveQuiz()
+        {
+            _quizRepo.Remove(POCO);
+
+            _notificationService.StartLoading("QuizViewModel");
+            await _quizRepo.SaveAsync();
+            _notificationService.StopLoading("QuizViewModel");
+        }
     }
 }
