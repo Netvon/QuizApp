@@ -7,5 +7,6 @@ namespace QuizApp.Helpers
         event EventHandler<CanOpenWindowEventArgs> OnCanOpenWindowChanged;
         bool CanOpenWindow(string name);
         void OpenWindow(string name);
+        bool AskConfirmation(string promt, string owner);
     }
 }

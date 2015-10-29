@@ -61,6 +61,27 @@ namespace QuizApp.Helpers
                 w.Show();
             }           
         }
+
+        public bool AskConfirmation(string promt, string owner)
+        {
+            var w = windows.FirstOrDefault(window => window.GetType().Name == owner);
+
+            MessageBoxResult mbr = MessageBoxResult.None;
+
+            if (w != null)
+                mbr = MessageBox.Show(w, promt, "Confirm", MessageBoxButton.YesNo);
+            else
+                mbr = MessageBox.Show(promt, "Confirm", MessageBoxButton.YesNo);
+
+            switch (mbr)
+            {
+                case MessageBoxResult.OK:
+                case MessageBoxResult.Yes:
+                    return true;
+            }
+
+            return false;
+        }
         #endregion
     }
 }

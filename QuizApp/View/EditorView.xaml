@@ -22,10 +22,22 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <ComboBox x:Name="comboBox" ItemsSource="{Binding AllQuizes}" 
-                              SelectedItem="{Binding SelectedQuiz, Mode=TwoWay}" 
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="comboBox" ItemsSource="{Binding AllQuizes}" 
+                              SelectedItem="{Binding SelectedQuiz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                               ItemTemplate="{StaticResource QuizDataTemplate}"
-                              Grid.Row="0" Margin="8"/>
+                              Grid.Row="0"/>
+                        <Button Content="-" Margin="8,0,0,0" Grid.Column="1"
+                                Command="{Binding RemoveQuizCommand}"/>
+                        <Button Content="+" Margin="8,0,0,0" Grid.Column="2"
+                                Command="{Binding AddQuizCommand}"/>
+                    </Grid>
+                    
                     <local:QuizEditor QuestionSource="{Binding Editor.AllQuestions, Source={StaticResource Locator}}"
                                   Quiz="{Binding SelectedItem, 
                                                  ElementName=comboBox, 

@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using QuizApp.Helpers;
 using QuizApp.Model;
 using System;
@@ -22,6 +23,10 @@ namespace QuizApp.ViewModel
 
         public ObservableCollection<QuizViewModel> AllQuizes { get; set; }
         public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
+
+        public RelayCommand RemoveQuizCommand { get; set; }
+        public RelayCommand AddQuizCommand { get; set; }
+
         public Visibility LoadingVisibility
         {
             get
@@ -61,11 +66,17 @@ namespace QuizApp.ViewModel
             }
         }
 
+        readonly INotificationService _notificationService;
+        readonly IWindowService _windowService;
+
         public EditorViewModel(IRepository<Quiz> quizRepo,
                                IRepository<Category> categoryRepo,
                                IRepository<Question> questionRepo,
-                               INotificationService notificationService)
+                               INotificationService notificationService,
+                               IWindowService windowService)
         {
+            _windowService = windowService;
+            _notificationService = notificationService;
             _quizRepo = quizRepo;
             _questionRepo = questionRepo;
             _categoryRepo = categoryRepo;
@@ -74,6 +85,9 @@ namespace QuizApp.ViewModel
             notificationService.OnStoppedLoading += NotificationService_OnLoadingChanged;
 
             LoadingVisibility = Visibility.Hidden;
+
+            RemoveQuizCommand = new RelayCommand(OnRemoveQuiz, CanRemoveQuiz);
+            AddQuizCommand = new RelayCommand(OnAddQuiz);
 
             AllQuizes = new ObservableCollection<QuizViewModel>();
             AllQuestions = new ObservableCollection<QuestionViewModel>();
@@ -89,7 +103,31 @@ namespace QuizApp.ViewModel
             }
 
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, notificationService);
-            SelectedTabIndex = 1;
+            //SelectedTabIndex = 1;
+        }
+
+        void OnAddQuiz()
+        {
+            SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, _notificationService);
+            RaisePropertyChanged("SelectedQuiz");
+            RemoveQuizCommand.RaiseCanExecuteChanged();
+        }
+
+        bool CanRemoveQuiz()
+        {
+            return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
+        }
+
+        void OnRemoveQuiz()
+        {
+            if(_windowService.AskConfirmation("Wil je deze Quiz echt verwijderen?", "EditorView"))
+            {
+                SelectedQuiz.RemoveQuizCommand.Execute(null);
+                AllQuizes.Remove(SelectedQuiz);
+                SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, _notificationService);
+                RemoveQuizCommand.RaiseCanExecuteChanged();
+            }
+            
         }
 
         void NotificationService_OnLoadingChanged(object sender, LoadingNotificationEventArgs e)
