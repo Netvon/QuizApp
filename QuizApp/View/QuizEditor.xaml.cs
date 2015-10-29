@@ -66,6 +66,7 @@ namespace QuizApp.View
         public QuizEditor()
         {
             InitializeComponent();
+            DataContext = this;
         }
     }
 }

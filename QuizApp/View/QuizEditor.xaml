@@ -28,7 +28,7 @@
 				</Grid.ColumnDefinitions>
 				
 				<Label Content="Naam:" FontSize="10.667" VerticalAlignment="Center" Margin="0,0,0,8"/>
-				<TextBox Text="{Binding Quiz.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" Margin="0,0,0,8" Grid.Column="1" VerticalContentAlignment="Center"/>
+				<TextBox Text="{Binding Quiz.Name }" Margin="0,0,0,8" Grid.Column="1" VerticalContentAlignment="Center"/>
 			</Grid>
 		</Grid>
 
@@ -38,24 +38,24 @@
 				<ColumnDefinition Width="40"/>
 				<ColumnDefinition Width="40"/>
 			</Grid.ColumnDefinitions>
-			<Button Command="{Binding Quiz.AddQuestionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" Grid.Column="1" Content="+" Margin="8,0,0,0"/>
-			<Button Command="{Binding Quiz.RemoveQuestionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" Grid.Column="2" Content="-" Margin="8,0,0,0"/>
-			<ComboBox ItemsSource="{Binding QuestionSource, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" 
-				SelectedItem="{Binding Quiz.SelectedDropdownQuestion, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" 
+			<Button Command="{Binding Quiz.AddQuestionCommand}" Grid.Column="1" Content="+" Margin="8,0,0,0"/>
+			<Button Command="{Binding Quiz.RemoveQuestionCommand}" Grid.Column="2" Content="-" Margin="8,0,0,0"/>
+			<ComboBox ItemsSource="{Binding QuestionSource }" 
+				SelectedItem="{Binding Quiz.SelectedDropdownQuestion }" 
 				ItemTemplate="{DynamicResource QuestionDataTemplate}"
 				Grid.Column="0" Margin="0" 
 				VerticalContentAlignment="Center" />
 		</Grid>
 
 		<Grid Grid.Row="2" Margin="0,8,0,0">
-			<ListView ItemsSource="{Binding Quiz.Questions, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}"
+			<ListView ItemsSource="{Binding Quiz.Questions }"
 				ItemTemplate="{DynamicResource QuestionDataTemplate}"
-				SelectedItem="{Binding Quiz.SelectedListQuestion, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}"/>
+				SelectedItem="{Binding Quiz.SelectedListQuestion }"/>
 		</Grid>
 
 		<Grid Grid.Row="3">
-			<Button Command="{Binding Quiz.SaveQuizCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" Content="Opslaan" HorizontalAlignment="Right" Margin="0,8,0,0"/>
-			<Button Command="{Binding Quiz.AddQuizCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuizEditor}}}" Content="Toevoegen" HorizontalAlignment="Left" Margin="0,8,0,0"/>
+			<Button Command="{Binding Quiz.SaveQuizCommand }" Content="Opslaan" HorizontalAlignment="Right" Margin="0,8,0,0"/>
+			<Button Command="{Binding Quiz.RemoveQuizCommand }" Content="Toevoegen" HorizontalAlignment="Left" Margin="0,8,0,0"/>
 		</Grid>
 	</Grid>
 </UserControl>

@@ -7,8 +7,11 @@
              mc:Ignorable="d">
     <Grid>
         <StackPanel>
-            <Label Content="{Binding Name}"/>
-            <Label Content="{Binding Questions.Count}"/>
+            <Label Content="{Binding Name}" Padding="0" />
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Aantal vragen: " Padding="0" FontSize="9.333"/>
+                <Label Content="{Binding Questions.Count}" Padding="0" FontSize="9.333"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </UserControl>

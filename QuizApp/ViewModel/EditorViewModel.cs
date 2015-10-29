@@ -18,6 +18,7 @@ namespace QuizApp.ViewModel
         IRepository<Question> _questionRepo;
         IRepository<Category> _categoryRepo;
         Visibility _loadingVisibility;
+        int _selectedTabIndex;
 
         public ObservableCollection<QuizViewModel> AllQuizes { get; set; }
         public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
@@ -43,6 +44,19 @@ namespace QuizApp.ViewModel
             set
             {
                 _selectedQuiz = value;
+                RaisePropertyChanged("SelectedQuiz");
+            }
+        }
+
+        public int SelectedTabIndex
+        {
+            get
+            {
+                return _selectedTabIndex;
+            }
+            set
+            {
+                _selectedTabIndex = value;
                 RaisePropertyChanged();
             }
         }
@@ -56,8 +70,8 @@ namespace QuizApp.ViewModel
             _questionRepo = questionRepo;
             _categoryRepo = categoryRepo;
 
-            notificationService.OnStartedLoading += NotificationService_OnStartedLoading;
-            notificationService.OnStoppedLoading += NotificationService_OnStoppedLoading;
+            notificationService.OnStartedLoading += NotificationService_OnLoadingChanged;
+            notificationService.OnStoppedLoading += NotificationService_OnLoadingChanged;
 
             LoadingVisibility = Visibility.Hidden;
 
@@ -75,16 +89,15 @@ namespace QuizApp.ViewModel
             }
 
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, notificationService);
+            SelectedTabIndex = 1;
         }
 
-        void NotificationService_OnStoppedLoading(object sender, LoadingNotificationEventArgs e)
+        void NotificationService_OnLoadingChanged(object sender, LoadingNotificationEventArgs e)
         {
-            LoadingVisibility = Visibility.Hidden;
-        }
-
-        void NotificationService_OnStartedLoading(object sender, LoadingNotificationEventArgs e)
-        {
-            LoadingVisibility = Visibility.Visible;
+            if(e.Status == LoadingNotificationEventArgs.LoadingStatus.Ended)
+                LoadingVisibility = Visibility.Hidden;
+            else
+                LoadingVisibility = Visibility.Visible;
         }
     }
 }

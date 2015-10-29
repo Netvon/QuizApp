@@ -7,12 +7,33 @@
         mc:Ignorable="d"
         Title="EditorView" Height="300" Width="300"
         DataContext="{Binding Editor, Source={StaticResource Locator}}" Closed="Window_Closed">
+    <Window.Resources>
+        <DataTemplate x:Key="QuizDataTemplate">
+            <local:QuizListItem/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
-        <TabControl Margin="6">
+        <TabControl Margin="6" SelectedIndex="{Binding SelectedTabIndex}">
             <TabItem Header="Quiz">
-                <local:QuizEditor QuestionSource="{Binding AllQuestions}"
-                                  Quiz="{Binding SelectedQuiz}"
-                                  Margin="8"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="38"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <ComboBox x:Name="comboBox" ItemsSource="{Binding AllQuizes}" 
+                              SelectedItem="{Binding SelectedQuiz, Mode=TwoWay}" 
+                              ItemTemplate="{StaticResource QuizDataTemplate}"
+                              Grid.Row="0" Margin="8"/>
+                    <local:QuizEditor QuestionSource="{Binding Editor.AllQuestions, Source={StaticResource Locator}}"
+                                  Quiz="{Binding SelectedItem, 
+                                                 ElementName=comboBox, 
+                                                 UpdateSourceTrigger=PropertyChanged, 
+                                                 Mode=TwoWay}"
+                                  Margin="8" Grid.Row="1"/>
+                </Grid>
+
             </TabItem>
             <TabItem Header="Vragen">
 
