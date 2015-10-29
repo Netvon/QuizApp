@@ -109,8 +109,7 @@ namespace QuizApp.ViewModel
         void OnAddQuiz()
         {
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, _notificationService);
-            RaisePropertyChanged("SelectedQuiz");
-            RemoveQuizCommand.RaiseCanExecuteChanged();
+            AllQuizes.Add(SelectedQuiz);
         }
 
         bool CanRemoveQuiz()

@@ -155,7 +155,8 @@ namespace QuizApp.ViewModel
             if (SelectedDropdownQuestion == null)
                 return false;
 
-            if (Questions.Count >= 10 || POCO.Questions.Any(q => q.QuestionID == SelectedDropdownQuestion.POCO.QuestionID))
+            if (Questions.Count >= 10 || 
+                Questions.Any(q => q.POCO.QuestionID == SelectedDropdownQuestion.POCO.QuestionID))
                 return false;
 
             return true;
@@ -163,7 +164,8 @@ namespace QuizApp.ViewModel
 
         async void OnRemoveQuestion()
         {
-            POCO.Questions.Remove(new QuizQuestion() { Question = SelectedListQuestion.POCO, Quiz = POCO });
+            var remove = POCO.Questions.FirstOrDefault(q => q.QuestionID == SelectedListQuestion.POCO.QuestionID);
+            POCO.Questions.Remove(remove);
             Questions.Remove(SelectedListQuestion);
             SelectedListQuestion = null;
             AddQuizCommand.RaiseCanExecuteChanged();
