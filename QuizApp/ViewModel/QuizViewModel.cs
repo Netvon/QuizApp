@@ -25,6 +25,7 @@ namespace QuizApp.ViewModel
 
         #region Properties
 
+
         public string Name
         {
             get
