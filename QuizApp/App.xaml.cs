@@ -1,4 +1,5 @@
-﻿using QuizApp.Model;
+﻿using GalaSoft.MvvmLight.Threading;
+using QuizApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,6 +17,7 @@ namespace QuizApp
     {
         public App()
         {
+            DispatcherHelper.Initialize();
             //QuizContext context = new QuizContext();
             //Category cat1 = new Category { Name = "Category 1" };
             ////context.Categories.Add(cat1);

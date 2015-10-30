@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using QuizApp.Helpers;
 using QuizApp.Model;
 using System;
 using System.Collections.Generic;
@@ -22,14 +23,18 @@ namespace QuizApp.ViewModel
             {
                 POCO.Name = value;
                 RaisePropertyChanged();
+                AddCategoryCommand.RaiseCanExecuteChanged();
             }
         }
 
         public RelayCommand AddCategoryCommand { get; set; }
 
-        public CategoryViewModel(Category poco, IRepository<Category> categoryRepo)
+        readonly INotificationService _notificationService;
+
+        public CategoryViewModel(Category poco, IRepository<Category> categoryRepo, INotificationService notificationService)
             : base(poco)
         {
+            _notificationService = notificationService;
             _categoryRepo = categoryRepo;
 
             AddCategoryCommand = new RelayCommand(OnAddCategory, CanAddCategory);
@@ -39,7 +44,14 @@ namespace QuizApp.ViewModel
         {
             _categoryRepo.Add(POCO);
 
+            _notificationService.StartLoading("CategoryViewModel");
             await _categoryRepo.SaveAsync();
+            _notificationService.StopLoading("CategoryViewModel");
+            _notificationService.SendMessage("CategoryViewModel", "CatAdded");
+
+            POCO = new Category();
+            RaisePropertyChanged("Name");
+            AddCategoryCommand.RaiseCanExecuteChanged();
         }
 
         //test
@@ -54,7 +66,7 @@ namespace QuizApp.ViewModel
 
         bool CanAddCategory()
         {
-            if (string.IsNullOrEmpty(Name) || _categoryRepo.AsQueryable().Any(c => c.Name.Contains(Name)))
+            if (string.IsNullOrEmpty(Name) || _categoryRepo.AsQueryable().Any(c => c.Name == Name))
                 return false;
 
             return true;

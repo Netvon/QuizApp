@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Threading;
 using QuizApp.Helpers;
 using QuizApp.Model;
 using System;
@@ -19,13 +20,17 @@ namespace QuizApp.ViewModel
         IRepository<Question> _questionRepo;
         IRepository<Category> _categoryRepo;
         Visibility _loadingVisibility;
+        Visibility _notificationVisibility;
+        string _notificationMessage;
         int _selectedTabIndex;
 
         public ObservableCollection<QuizViewModel> AllQuizes { get; set; }
         public ObservableCollection<QuestionViewModel> AllQuestions { get; set; }
+        public ObservableCollection<CategoryViewModel> AllCategories { get; set; }
 
         public RelayCommand RemoveQuizCommand { get; set; }
         public RelayCommand AddQuizCommand { get; set; }
+        public RelayCommand CloseNotificationCommand { get; set; }
 
         public Visibility LoadingVisibility
         {
@@ -40,6 +45,19 @@ namespace QuizApp.ViewModel
             }
         }
 
+        public Visibility NotificationVisibility
+        {
+            get
+            {
+                return _notificationVisibility;
+            }
+            set
+            {
+                _notificationVisibility = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public QuizViewModel SelectedQuiz
         {
             get
@@ -50,6 +68,8 @@ namespace QuizApp.ViewModel
             {
                 _selectedQuiz = value;
                 RaisePropertyChanged("SelectedQuiz");
+                RaisePropertyChanged("CanEditQuiz");
+                RemoveQuizCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -65,6 +85,32 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        public string NotificationMessage
+        {
+            get
+            {
+                return _notificationMessage;
+            }
+            set
+            {
+                _notificationMessage = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool CanEditQuiz
+        {
+            get
+            {
+                if(AllQuizes != null)
+                    return AllQuizes.Contains(SelectedQuiz);
+
+                return false;
+            }
+        }
+
+        public CategoryViewModel NewCategory { get; set; }
 
         readonly INotificationService _notificationService;
         readonly IWindowService _windowService;
@@ -83,38 +129,84 @@ namespace QuizApp.ViewModel
 
             notificationService.OnStartedLoading += NotificationService_OnLoadingChanged;
             notificationService.OnStoppedLoading += NotificationService_OnLoadingChanged;
+            notificationService.OnNewDisplayMessage += NotificationService_OnNewDisplayMessage;
+            notificationService.OnMessageReceived += NotificationService_OnMessageReceived;
 
             LoadingVisibility = Visibility.Hidden;
+            NotificationVisibility = Visibility.Hidden;
 
             RemoveQuizCommand = new RelayCommand(OnRemoveQuiz, CanRemoveQuiz);
             AddQuizCommand = new RelayCommand(OnAddQuiz);
+            CloseNotificationCommand = new RelayCommand(OnCloseNotification);
 
-            AllQuizes = new ObservableCollection<QuizViewModel>();
-            AllQuestions = new ObservableCollection<QuestionViewModel>();
-
-            foreach (var quiz in _quizRepo.GetAllItems())
+            Task.Run(() =>
             {
-                AllQuizes.Add(new QuizViewModel(quiz, _quizRepo, _questionRepo, _categoryRepo, notificationService));
-            }
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    LoadingVisibility = Visibility.Visible;
+                });
 
-            foreach (var question in _questionRepo.GetAllItems())
-            {
-                AllQuestions.Add(new QuestionViewModel(question, _questionRepo, _categoryRepo));
-            }
+                var allQuizes = new List<QuizViewModel>();
+                var allQuestions = new List<QuestionViewModel>();
+                var allCategories = new List<CategoryViewModel>();
+
+                foreach (var quiz in _quizRepo.GetAllItems())
+                {                
+                    allQuizes.Add(new QuizViewModel(quiz, _quizRepo, _questionRepo, _categoryRepo, notificationService));
+                }
+
+                foreach (var question in _questionRepo.GetAllItems())
+                {
+                    allQuestions.Add(new QuestionViewModel(question, _questionRepo, _categoryRepo, _notificationService));
+                }
+
+                foreach (var categorie in _categoryRepo.GetAllItems())
+                {
+                    allCategories.Add(new CategoryViewModel(categorie, _categoryRepo, _notificationService));
+                }
+
+                DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                {
+                    AllQuizes = new ObservableCollection<QuizViewModel>(allQuizes);
+                    AllQuestions = new ObservableCollection<QuestionViewModel>(allQuestions);
+                    AllCategories = new ObservableCollection<CategoryViewModel>(allCategories);
+                    RaisePropertyChanged("AllQuizes");
+                    RaisePropertyChanged("AllQuestions");
+                    RaisePropertyChanged("AllCategories");
+                    LoadingVisibility = Visibility.Hidden;
+                });
+            });            
 
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, notificationService);
+            NewCategory = new CategoryViewModel(new Category(), _categoryRepo, _notificationService);
             //SelectedTabIndex = 1;
+        }
+
+        void NotificationService_OnMessageReceived(object sender, MessageReceivedEventArgs e)
+        {
+            if ((string)e.Sender == "CategoryViewModel" && e.Message == "CatAdded")
+            {
+                AllCategories.Add(new CategoryViewModel(new Category() { Name = NewCategory.Name }, _categoryRepo, _notificationService));
+                RaisePropertyChanged("AllCategories");
+            }
+        }
+
+        void OnCloseNotification()
+        {
+            NotificationVisibility = Visibility.Hidden;
         }
 
         void OnAddQuiz()
         {
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, _notificationService);
             AllQuizes.Add(SelectedQuiz);
+            RaisePropertyChanged("CanEditQuiz");
         }
 
         bool CanRemoveQuiz()
         {
-            return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
+            return !string.IsNullOrEmpty(SelectedQuiz.Name);
+            //return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
         }
 
         void OnRemoveQuiz()
@@ -135,6 +227,16 @@ namespace QuizApp.ViewModel
                 LoadingVisibility = Visibility.Hidden;
             else
                 LoadingVisibility = Visibility.Visible;
+        }
+
+        void NotificationService_OnNewDisplayMessage(object sender, MessageNotificationEventArgs e)
+        {
+            if(e.Token as string == "QuizViewModel")
+            {
+                NotificationVisibility = Visibility.Visible;
+                NotificationMessage = e.Message;
+            }
+            
         }
     }
 }

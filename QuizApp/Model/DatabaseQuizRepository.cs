@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace QuizApp.Model
@@ -48,6 +49,9 @@ namespace QuizApp.Model
 
         public async Task SaveAsync()
         {
+#if DEBUG
+            await Task.Delay(4000);
+#endif
             await _database.SaveChangesAsync();
         }
 
