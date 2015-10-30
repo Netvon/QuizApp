@@ -104,7 +104,7 @@ namespace QuizApp.ViewModel
 
             foreach (var item in poco.Questions)
             {
-                Questions.Add(new QuestionViewModel(item.Question, _questionRepo, _categoryRepo));
+                Questions.Add(new QuestionViewModel(item.Question, _questionRepo, _categoryRepo, _notificationService));
             }
 
             //AllQuestions = new ObservableCollection<QuestionViewModel>();

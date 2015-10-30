@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QuizApp.Helpers;
 
 namespace QuizApp.ViewModel
 {
@@ -46,13 +47,16 @@ namespace QuizApp.ViewModel
 
         public ObservableCollection<Answer> Answers { get; set; }
 
-        public QuestionViewModel(Question poco, IRepository<Question> questionRepo, IRepository<Category> categoryRepo)
+        readonly INotificationService _notificationService;
+
+        public QuestionViewModel(Question poco, IRepository<Question> questionRepo, IRepository<Category> categoryRepo, INotificationService notificationService)
             : base(poco)
         {
+            _notificationService = notificationService;
             _questionRepo = questionRepo;
             _catRepo = categoryRepo;
             Answers = new ObservableCollection<Answer>(poco.Answers);
-            Category = new CategoryViewModel(poco.Category, _catRepo);
+            Category = new CategoryViewModel(poco.Category, _catRepo, _notificationService);
 
             AddQuestionCommand = new RelayCommand(OnAddQuestion, CanAddQuestion);
         }

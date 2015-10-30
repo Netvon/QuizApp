@@ -90,6 +90,7 @@
     <Compile Include="Helpers\IWindowService.cs" />
     <Compile Include="Helpers\LoadingNotificationEventArgs.cs" />
     <Compile Include="Helpers\MessageNotificationEventArgs.cs" />
+    <Compile Include="Helpers\MessageReceivedEventArgs.cs" />
     <Compile Include="Helpers\WpfNotificationService.cs" />
     <Compile Include="Helpers\WpfWindowService.cs" />
     <Compile Include="Model\Answer.cs" />
@@ -112,6 +113,9 @@
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\CategoryEditor.xaml.cs">
       <DependentUpon>CategoryEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CategoryListItem.xaml.cs">
+      <DependentUpon>CategoryListItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
@@ -138,6 +142,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\CategoryEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CategoryListItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

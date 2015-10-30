@@ -11,6 +11,7 @@ namespace QuizApp.Helpers
         public event EventHandler<MessageNotificationEventArgs> OnNewDisplayMessage;
         public event EventHandler<LoadingNotificationEventArgs> OnStartedLoading;
         public event EventHandler<LoadingNotificationEventArgs> OnStoppedLoading;
+        public event EventHandler<MessageReceivedEventArgs> OnMessageReceived;
 
         public void DisplayMessage(object token, string message)
         {
@@ -28,6 +29,12 @@ namespace QuizApp.Helpers
         {
             var onStoppedLoading = OnStoppedLoading;
             onStoppedLoading(this, new LoadingNotificationEventArgs() { Token = token, Status = LoadingNotificationEventArgs.LoadingStatus.Ended });
+        }
+
+        public void SendMessage(object sender, string message)
+        {
+            var onMessageReceived = OnMessageReceived;
+            onMessageReceived(this, new MessageReceivedEventArgs() { Sender = sender, Message = message });
         }
     }
 }
