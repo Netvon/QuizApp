@@ -105,6 +105,7 @@
     <Compile Include="Model\QuizQuestion.cs" />
     <Compile Include="Model\QuizContext.cs" />
     <Compile Include="ViewModel\EditorViewModel.cs" />
+    <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\QuestionViewModel.cs" />
     <Compile Include="ViewModel\CategoryViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

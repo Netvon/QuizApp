@@ -127,6 +127,10 @@ namespace QuizApp.ViewModel
             _questionRepo = questionRepo;
             _categoryRepo = categoryRepo;
 
+            AllQuizes = new ObservableCollection<QuizViewModel>();
+            AllQuestions = new ObservableCollection<QuestionViewModel>();
+            AllCategories = new ObservableCollection<CategoryViewModel>();
+
             notificationService.OnStartedLoading += NotificationService_OnLoadingChanged;
             notificationService.OnStoppedLoading += NotificationService_OnLoadingChanged;
             notificationService.OnNewDisplayMessage += NotificationService_OnNewDisplayMessage;
@@ -168,7 +172,7 @@ namespace QuizApp.ViewModel
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
                     AllQuizes = new ObservableCollection<QuizViewModel>(allQuizes);
-                    AllQuestions = new ObservableCollection<QuestionViewModel>(allQuestions);
+                    allQuestions.ForEach(q => AllQuestions.Add(q));
                     AllCategories = new ObservableCollection<CategoryViewModel>(allCategories);
                     RaisePropertyChanged("AllQuizes");
                     RaisePropertyChanged("AllQuestions");

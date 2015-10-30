@@ -54,7 +54,7 @@
 					</Grid.ColumnDefinitions>
 					<Button Command="{Binding Quiz.AddQuestionCommand}" Grid.Column="1" Content="+" Margin="8,0,0,0"/>
 					<Button Command="{Binding Quiz.RemoveQuestionCommand}" Grid.Column="2" Content="-" Margin="8,0,0,0"/>
-					<ComboBox ItemsSource="{Binding QuestionSource }" 
+					<ComboBox ItemsSource="{Binding QuestionSource}" 
 				SelectedItem="{Binding Quiz.SelectedDropdownQuestion }" 
 				ItemTemplate="{DynamicResource QuestionDataTemplate}"
 				Grid.Column="0" Margin="0" 
