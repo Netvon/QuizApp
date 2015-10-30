@@ -86,6 +86,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helpers\CanOpenWindowEventArgs.cs" />
+    <Compile Include="Helpers\EnumerableExtentions.cs" />
     <Compile Include="Helpers\INotificationService.cs" />
     <Compile Include="Helpers\IWindowService.cs" />
     <Compile Include="Helpers\LoadingNotificationEventArgs.cs" />
@@ -121,6 +122,9 @@
     <Compile Include="View\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\GameView.xaml.cs">
+      <DependentUpon>GameView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\QuestionEditor.xaml.cs">
       <DependentUpon>QuestionEditor.xaml</DependentUpon>
     </Compile>
@@ -154,6 +158,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GameView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

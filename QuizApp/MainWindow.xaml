@@ -9,7 +9,12 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" 
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    <Grid>
-        <Button Command="{Binding OpenEditorCommand}" Content="Open editor"/>
+    <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Button Command="{Binding OpenEditorCommand}" Content="Open editor" Grid.Column="0" Margin="0,0,4,0"/>
+        <Button Command="{Binding OpenGameCommand}" Content="Open game" Grid.Column="1" Margin="4,0,0,0"/>
     </Grid>
 </Window>

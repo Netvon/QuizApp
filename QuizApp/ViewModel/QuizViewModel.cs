@@ -91,7 +91,7 @@ namespace QuizApp.ViewModel
         public ObservableCollection<QuestionViewModel> Questions { get; set; }
         #endregion
 
-        public QuizViewModel(Quiz poco, IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo, INotificationService notificationService) 
+        public QuizViewModel(Quiz poco, IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo, INotificationService notificationService)
             : base(poco)
         {
             _quizRepo = quizRepo;
@@ -169,7 +169,7 @@ namespace QuizApp.ViewModel
             if (SelectedDropdownQuestion == null)
                 return false;
 
-            if (Questions.Count >= 10 || 
+            if (Questions.Count >= 10 ||
                 Questions.Any(q => q.POCO.QuestionID == SelectedDropdownQuestion.POCO.QuestionID))
                 return false;
 
@@ -214,6 +214,15 @@ namespace QuizApp.ViewModel
             _notificationService.StartLoading("QuizViewModel");
             await _quizRepo.SaveAsync();
             _notificationService.StopLoading("QuizViewModel");
+        }
+
+        public async Task AddGivenAnswerToQuestion(QuestionViewModel question, Answer answer)
+        {
+            var qq = POCO.Questions.FirstOrDefault(q => q.Question == question.POCO);
+            qq.GivenAnswer = answer;
+            qq.GivenAnswerText = answer.AnswerText;
+
+            await _quizRepo.SaveAsync();
         }
     }
 }

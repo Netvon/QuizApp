@@ -13,6 +13,7 @@ namespace QuizApp.ViewModel
         IWindowService _windowService;
 
         public RelayCommand OpenEditorCommand { get; set; }
+        public RelayCommand OpenGameCommand { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -23,12 +24,27 @@ namespace QuizApp.ViewModel
             _windowService.OnCanOpenWindowChanged += WindowService_OnCanOpenWindowChanged;
 
             OpenEditorCommand = new RelayCommand(OnOpenEditor, CanOpenEditor);
+            OpenGameCommand = new RelayCommand(OnOpenGame, CanOpenGame);
+        }
+
+        bool CanOpenGame()
+        {
+            return _windowService.CanOpenWindow("GameView");
+        }
+
+        void OnOpenGame()
+        {
+            _windowService.OpenWindow("GameView");
+            OpenGameCommand.RaiseCanExecuteChanged();
         }
 
         void WindowService_OnCanOpenWindowChanged(object sender, CanOpenWindowEventArgs e)
         {
             if(e.WindowName.Contains("EditorView"))
                 OpenEditorCommand.RaiseCanExecuteChanged();
+
+            if (e.WindowName.Contains("GameView"))
+                OpenGameCommand.RaiseCanExecuteChanged();
         }
 
         void OnOpenEditor()
