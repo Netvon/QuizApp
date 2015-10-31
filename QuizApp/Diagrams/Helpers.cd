@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="QuizApp.Helpers.CanOpenWindowEventArgs" Collapsed="true">
+    <Position X="3" Y="1.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\CanOpenWindowEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.WpfWindowService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="3" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>MAAACAAAEAAAAACAAAACAAAAAAAAAAAAAAAAAABQAAA=</HashCode>
+      <FileName>Helpers\WpfWindowService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.164" />
+  </Class>
+  <Class Name="QuizApp.Helpers.EnumerableExtentions">
+    <Position X="0.5" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Helpers\EnumerableExtentions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.LoadingNotificationEventArgs" Collapsed="true">
+    <Position X="8.25" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Helpers\LoadingNotificationEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.MessageNotificationEventArgs" Collapsed="true">
+    <Position X="8.25" Y="2.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAABAAA=</HashCode>
+      <FileName>Helpers\MessageNotificationEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.MessageReceivedEventArgs" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAA=</HashCode>
+      <FileName>Helpers\MessageReceivedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.WpfNotificationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAQAAQACAAIAgAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Helpers\WpfNotificationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="QuizApp.Helpers.IWindowService">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>MAAACAAAEAAAAACAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>Helpers\IWindowService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="QuizApp.Helpers.INotificationService">
+    <Position X="5.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAQAAQACAAIAgAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Helpers\INotificationService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

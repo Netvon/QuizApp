@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="QuizApp.ViewModel.CategoryViewModel">
+    <Position X="5.25" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAQAQAAAAAAAAAQAAgAAAAAAAAAAAAEAIAA=</HashCode>
+      <FileName>ViewModel\CategoryViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.MainViewModel">
+    <Position X="13" Y="3" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>BAgAIAAAAAABAAAAAAAgEQAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>ViewModel\MainViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.POCOViewModel&lt;T&gt;">
+    <Position X="3" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModel\POCOViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.QuestionViewModel">
+    <Position X="0.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAgABCAAAAAAAAAAAQEAAAAAQAAAiAAACAA=</HashCode>
+      <FileName>ViewModel\QuestionViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.QuizViewModel">
+    <Position X="2.75" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAYgBAEAABHCAAAAEBgAQAAQEAAAAEAAAQAAkBAAA=</HashCode>
+      <FileName>ViewModel\QuizViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.ViewModelLocator">
+    <Position X="7.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABEAAAAA=</HashCode>
+      <FileName>ViewModel\ViewModelLocator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.EditorViewModel">
+    <Position X="9.75" Y="3" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAQgIAEABBAACNgAiCABQAECAAAAABBIgQAQkAAgA=</HashCode>
+      <FileName>ViewModel\EditorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.GameViewModel">
+    <Position X="7.5" Y="3" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAYABBAAYAAoAAIIAKAAAAAAAgKARhAQBAAA=</HashCode>
+      <FileName>ViewModel\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

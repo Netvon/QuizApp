@@ -5,13 +5,16 @@ using QuizApp.Model;
 using QuizApp.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
-using QuizApp.ViewModel;
+using QuizApp.Helpers;
 
 namespace QuizApp.Test
 {
     [TestClass]
     public class QuizAppTests
     {
+        static Mock<INotificationService> mockNS = new Mock<INotificationService>();
+        static Mock<IWindowService> mockWS = new Mock<IWindowService>();
+
         [TestMethod]
         [TestCategory("IRepository")]
         public void IRepository_GetAllItemsReturnAllItemsFromRepo()
@@ -243,7 +246,7 @@ namespace QuizApp.Test
             mock.Setup(r => r.GetAllItems()).Returns(categories);
             mock.Setup(repo => repo.Add(It.IsAny<Category>())).Callback<Category>(c => categories.Add(c));
 
-            var catvm = new CategoryViewModel(cat, mock.Object);
+            var catvm = new CategoryViewModel(cat, mock.Object, mockNS.Object);
             catvm.OnAddCategoryTest();            
 
             Assert.AreEqual(3, mock.Object.GetAllItems().Count());
@@ -268,7 +271,7 @@ namespace QuizApp.Test
             mock.Setup(repo => repo.Add(It.IsAny<Category>())).Callback<Category>(c => categories.Add(c));
             mock.Setup(r => r.AsQueryable()).Returns(categories.AsQueryable());
 
-            var catvm = new CategoryViewModel(cat, mock.Object);
+            var catvm = new CategoryViewModel(cat, mock.Object, mockNS.Object);
             catvm.OnAddCategoryTest();
 
             Assert.AreEqual(3, mock.Object.GetAllItems().Count());
@@ -285,7 +288,7 @@ namespace QuizApp.Test
             q.Answers = new List<Answer>();
             
             q.Text = "";
-            var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object, mockNS.Object);
 
             Assert.AreEqual(false, Questionvm.CanAddQuestion());
         }
@@ -300,7 +303,7 @@ namespace QuizApp.Test
             var q = new Question();
             q.Answers = new List<Answer>();
             q.Text = "asdasf";
-            var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object, mockNS.Object);
 
             Assert.AreEqual(false, Questionvm.CanAddQuestion());
         }
@@ -316,7 +319,7 @@ namespace QuizApp.Test
             q.Answers = new List<Answer>();
             q.Answers.Add(new Answer() { IsCorrect = false });
             q.Text = "asdasf";
-            var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object, mockNS.Object);
 
             Assert.AreEqual(false, Questionvm.CanAddQuestion());
         }
@@ -353,7 +356,7 @@ namespace QuizApp.Test
             w.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
             w.Answers.Add(new Answer() { AnswerText = "Answer3", IsCorrect = false });
 
-            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object, mockNS.Object);
 
             mock.Setup(r => r.GetAllItems()).Returns(list);
 
@@ -394,7 +397,7 @@ namespace QuizApp.Test
             w.Answers.Add(new Answer() { AnswerText = "Answer3", IsCorrect = false });
             w.Answers.Add(new Answer() { AnswerText = "Answer3", IsCorrect = false });
 
-            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object, mockNS.Object);
 
             mock.Setup(r => r.GetAllItems()).Returns(list);
 
@@ -431,7 +434,7 @@ namespace QuizApp.Test
             w.Answers = new List<Answer>();
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
 
-            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object, mockNS.Object);
 
             mock.Setup(r => r.GetAllItems()).Returns(list);
 
@@ -470,7 +473,7 @@ namespace QuizApp.Test
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = false });
 
-            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object, mockNS.Object);
 
             mock.Setup(r => r.GetAllItems()).Returns(list);
 
@@ -509,7 +512,7 @@ namespace QuizApp.Test
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
 
-            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object);
+            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object, mockNS.Object);
 
             mock.Setup(r => r.GetAllItems()).Returns(list);
 

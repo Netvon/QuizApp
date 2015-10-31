@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="QuizApp.Model.Answer">
+    <Position X="4.5" Y="7.5" Width="1.5" />
+    <AssociationLine Name="AnswerToQuestion" Type="QuizApp.Model.Question" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.188" Y="7.5" />
+        <Point X="5.188" Y="6.449" />
+        <Point X="6.688" Y="6.449" />
+        <Point X="6.688" Y="6.074" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAIAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Model\Answer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AnswerToQuestion" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="QuizApp.Model.Category">
+    <Position X="8.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Category.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Model.DatabaseCategoryRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAQCAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DatabaseCategoryRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_database" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.224" />
+  </Class>
+  <Class Name="QuizApp.Model.DatabaseQuestionRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAQCAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DatabaseQuestionRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_database" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="QuizApp.Model.DatabaseQuizRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAQCAAAAAAAAAAA=</HashCode>
+      <FileName>Model\DatabaseQuizRepository.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_database" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="QuizApp.Model.Question">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <AssociationLine Name="Answers" Type="QuizApp.Model.Answer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.062" Y="6.074" />
+        <Point X="7.062" Y="7.938" />
+        <Point X="6" Y="7.938" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAAAAAgAAAAAACACAAAIAAQAAACAAACAA=</HashCode>
+      <FileName>Model\Question.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Category" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Answers" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="QuizApp.Model.Quiz">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAgAAAAAAAAAAAAIAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\Quiz.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Questions" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="QuizApp.Model.QuizContext">
+    <Position X="7.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAEAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Model\QuizContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Model.QuizQuestion">
+    <Position X="3.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BABAAAAAAAAAAAEAgAAAACAAAAAAAIAEAAAAAAQAAAA=</HashCode>
+      <FileName>Model\QuizQuestion.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Question" />
+      <Property Name="Quiz" />
+      <Property Name="GivenAnswer" />
+    </ShowAsAssociation>
+  </Class>
+  <Interface Name="QuizApp.Model.IRepository&lt;T&gt;">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Model\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
