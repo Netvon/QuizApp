@@ -105,7 +105,25 @@ namespace QuizApp.Helpers
             return false;
         }
 
-        
+        public void CloseWindow(string name)
+        {
+            if(CanCloseWindow(name))
+            {
+                var w = windows.Find(window => window.GetType().Name == name);
+                w.Close();
+            }
+        }
+
+        public bool CanCloseWindow(string name)
+        {
+            var w = windows.Find(window => window.GetType().Name == name);
+            if (w == null)
+                return false;
+
+            return w.Visibility == Visibility.Visible || w.IsActive;
+        }
+
+
         #endregion
     }
 }

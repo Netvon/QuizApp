@@ -7,14 +7,21 @@
         xmlns:v="clr-namespace:QuizApp.View"
         x:Class="QuizApp.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" 
-        DataContext="{Binding Main, Source={StaticResource Locator}}">
+        Title="Kwisspel" Height="350" Width="525" 
+        DataContext="{Binding Main, Source={StaticResource Locator}}" Background="#FFFFF3BE">
     <Grid Margin="8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Button Command="{Binding OpenEditorCommand}" Content="Open editor" Grid.Column="0" Margin="0,0,4,0"/>
-        <Button Command="{Binding OpenGameCommand}" Content="Open game" Grid.Column="1" Margin="4,0,0,0"/>
+        
+        <Label Content="Kwisspel" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Foreground="#FF643200" FontFamily="Segoe UI Semilight" RenderTransformOrigin="0.5,0.5"/>
+
+        <Button Command="{Binding OpenEditorCommand}" Content="Open editor" Grid.Column="0" Margin="0,0,4,0" Grid.Row="1"/>
+        <Button Command="{Binding OpenGameCommand}" Content="Open game" Grid.Column="1" Margin="4,0,0,0" Grid.Row="1"/>
     </Grid>
 </Window>

@@ -39,10 +39,11 @@ namespace QuizApp.ViewModel
             var questionRepo = SimpleIoc.Default.GetInstance<IRepository<Question>>();
             var categoryRepo = SimpleIoc.Default.GetInstance<IRepository<Category>>();
             var noti = SimpleIoc.Default.GetInstance<INotificationService>();
+            var win = SimpleIoc.Default.GetInstance<IWindowService>();
 
             var qvm = new QuizViewModel(quizRepo.AsQueryable().First(), quizRepo, questionRepo, categoryRepo, noti);
 
-            _windowService.OpenWindow("GameView", new GameViewModel(qvm, quizRepo, questionRepo, categoryRepo, noti));
+            _windowService.OpenWindow("GameView", new GameViewModel(qvm, quizRepo, questionRepo, categoryRepo, noti, win));
             OpenGameCommand.RaiseCanExecuteChanged();
         }
 

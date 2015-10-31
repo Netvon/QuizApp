@@ -27,6 +27,7 @@ namespace QuizApp.ViewModel
 
         #region Commands
         public RelayCommand<Answer> SelectAnswerCommand { get; set; }
+        public RelayCommand CloseWindowCommand { get; set; }
         #endregion
 
         #region Properties
@@ -137,20 +138,25 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
+
+        readonly IWindowService _windowService;
         #endregion
 
         public GameViewModel(QuizViewModel quiz, 
             IRepository<Quiz> quizRepo, 
             IRepository<Question> questionRepo, 
             IRepository<Category> categoryRepo, 
-            INotificationService notificationService)
+            INotificationService notificationService,
+            IWindowService windowService)
         {
+            _windowService = windowService;
             _quizRepo = quizRepo;
             _questions = new Queue<QuestionViewModel>();
 
             _quiz = quiz;//new QuizViewModel(_quizRepo.AsQueryable().First(), quizRepo, questionRepo, categoryRepo, notificationService);
 
             SelectAnswerCommand = new RelayCommand<Answer>(OnSelectAnswer);
+            CloseWindowCommand = new RelayCommand(OnCloseWindow);
 
             foreach (var question in _quiz.Questions.Shuffle(new Random()))
             {
@@ -161,6 +167,11 @@ namespace QuizApp.ViewModel
             CurrentQuestionCount = 1;
             LoadingVisibility = Visibility.Hidden;
             DoneVisibility = Visibility.Hidden;
+        }
+
+        void OnCloseWindow()
+        {
+            _windowService.CloseWindow("GameView");
         }
 
         async void OnSelectAnswer(Answer obj)

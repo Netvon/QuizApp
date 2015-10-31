@@ -9,6 +9,8 @@ namespace QuizApp.Helpers
         bool CanOpenWindow(string name);
         void OpenWindow(string name);
         void OpenWindow(string name, ViewModelBase viewModel);
+        void CloseWindow(string name);
+        bool CanCloseWindow(string name);
         bool AskConfirmation(string promt, string owner);
     }
 }

@@ -10,7 +10,7 @@
 	<Window.Resources>
 		<DataTemplate x:Key="AnswerListTemplate">
 			<Button Content="{Binding AnswerText}" 
-					Command="{Binding SelectAnswerCommand}"
+					Command="{Binding DataContext.SelectAnswerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:GameView}}}"
 					CommandParameter="{Binding}"
 					Margin="8" FontSize="13.333"
 					Padding="8"/>
@@ -61,7 +61,7 @@
 			</StackPanel>
 		</Grid>
 
-		<Grid Visibility="{Binding DoneVisibility, FallbackValue=Hidden}"  Grid.RowSpan="3" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
+		<Grid Visibility="{Binding DoneVisibility, FallbackValue=hidden}"  Grid.RowSpan="3" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
 			<StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
 				<Label Content="{Binding Quiz.Name}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold"/>
 				<StackPanel Orientation="Horizontal">
@@ -72,6 +72,8 @@
 					<Label Content="Aantal vragen fout: "/>
 					<Label Content="{Binding IncorrectCount}"/>
 				</StackPanel>
+				<Button Content="Sluit scherm" HorizontalAlignment="Center" Padding="8"
+						Command="{Binding CloseWindowCommand}"/>
 			</StackPanel>
 			
 		</Grid>
