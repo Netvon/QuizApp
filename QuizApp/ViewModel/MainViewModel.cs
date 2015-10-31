@@ -5,6 +5,7 @@ using QuizApp.Helpers;
 using QuizApp.Model;
 using System.Collections.ObjectModel;
 using System;
+using System.Linq;
 
 namespace QuizApp.ViewModel
 {
@@ -34,7 +35,14 @@ namespace QuizApp.ViewModel
 
         void OnOpenGame()
         {
-            _windowService.OpenWindow("GameView");
+            var quizRepo = SimpleIoc.Default.GetInstance<IRepository<Quiz>>();
+            var questionRepo = SimpleIoc.Default.GetInstance<IRepository<Question>>();
+            var categoryRepo = SimpleIoc.Default.GetInstance<IRepository<Category>>();
+            var noti = SimpleIoc.Default.GetInstance<INotificationService>();
+
+            var qvm = new QuizViewModel(quizRepo.AsQueryable().First(), quizRepo, questionRepo, categoryRepo, noti);
+
+            _windowService.OpenWindow("GameView", new GameViewModel(qvm, quizRepo, questionRepo, categoryRepo, noti));
             OpenGameCommand.RaiseCanExecuteChanged();
         }
 

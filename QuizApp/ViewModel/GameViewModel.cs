@@ -13,6 +13,7 @@ namespace QuizApp.ViewModel
 {
     public class GameViewModel : ViewModelBase
     {
+        #region Fields
         QuizViewModel _quiz;
         QuestionViewModel _currentQuestion;
         IRepository<Quiz> _quizRepo;
@@ -22,9 +23,13 @@ namespace QuizApp.ViewModel
         int _currentQuestionCount;
         Visibility _loadingVisibility;
         Visibility _doneVisibility;
+        #endregion
 
+        #region Commands
         public RelayCommand<Answer> SelectAnswerCommand { get; set; }
+        #endregion
 
+        #region Properties
         public QuizViewModel Quiz
         {
             get
@@ -61,7 +66,6 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
-
         public int TotalQuestions
         {
             get
@@ -69,7 +73,6 @@ namespace QuizApp.ViewModel
                 return _quiz.Questions.Count;
             }
         }
-
         public int RemainingQuestion
         {
             get
@@ -77,7 +80,6 @@ namespace QuizApp.ViewModel
                 return TotalQuestions - _questions.Count;
             }
         }
-
         public int CorrectCount
         {
             get
@@ -85,7 +87,6 @@ namespace QuizApp.ViewModel
                 return _correctCount;
             }
         }
-
         public int IncorrectCount
         {
             get
@@ -93,7 +94,6 @@ namespace QuizApp.ViewModel
                 return _inCorrectCount;
             }
         }
-
         public bool HasQuizEnded
         {
             get
@@ -101,7 +101,6 @@ namespace QuizApp.ViewModel
                 return _questions.Count <= 0;
             }
         }
-
         public Visibility LoadingVisibility
         {
             get
@@ -114,7 +113,6 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
-
         public Visibility DoneVisibility
         {
             get
@@ -127,7 +125,6 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
-
         public int CurrentQuestionCount
         {
             get
@@ -140,13 +137,18 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
+        #endregion
 
-        public GameViewModel(IRepository<Quiz> quizRepo, IRepository<Question> questionRepo, IRepository<Category> categoryRepo, INotificationService notificationService)
+        public GameViewModel(QuizViewModel quiz, 
+            IRepository<Quiz> quizRepo, 
+            IRepository<Question> questionRepo, 
+            IRepository<Category> categoryRepo, 
+            INotificationService notificationService)
         {
             _quizRepo = quizRepo;
             _questions = new Queue<QuestionViewModel>();
 
-            _quiz = new QuizViewModel(_quizRepo.AsQueryable().First(), quizRepo, questionRepo, categoryRepo, notificationService);
+            _quiz = quiz;//new QuizViewModel(_quizRepo.AsQueryable().First(), quizRepo, questionRepo, categoryRepo, notificationService);
 
             SelectAnswerCommand = new RelayCommand<Answer>(OnSelectAnswer);
 

@@ -61,7 +61,7 @@ namespace QuizApp.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EditorViewModel>();
-            SimpleIoc.Default.Register<GameViewModel>();
+            //SimpleIoc.Default.Register<GameViewModel>();
 
         }
 
@@ -81,13 +81,13 @@ namespace QuizApp.ViewModel
             }
         }
 
-        public GameViewModel Game
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<GameViewModel>();
-            }
-        }
+        //public GameViewModel Game
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<GameViewModel>();
+        //    }
+        //}
 
         public static void Cleanup()
         {

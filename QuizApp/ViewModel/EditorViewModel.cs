@@ -171,9 +171,10 @@ namespace QuizApp.ViewModel
 
                 DispatcherHelper.CheckBeginInvokeOnUI(() =>
                 {
-                    AllQuizes = new ObservableCollection<QuizViewModel>(allQuizes);
+                    allQuizes.ForEach(q => AllQuizes.Add(q));
                     allQuestions.ForEach(q => AllQuestions.Add(q));
-                    AllCategories = new ObservableCollection<CategoryViewModel>(allCategories);
+                    allCategories.ForEach(c => AllCategories.Add(c));
+
                     RaisePropertyChanged("AllQuizes");
                     RaisePropertyChanged("AllQuestions");
                     RaisePropertyChanged("AllCategories");

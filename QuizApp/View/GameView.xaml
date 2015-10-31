@@ -5,12 +5,12 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:QuizApp.View"
 		mc:Ignorable="d"
-		Title="GameView" Height="300" Width="300"
-		DataContext="{Binding Game, Source={StaticResource Locator}}">
+		Title="GameView" Height="300" Width="300" Closed="Window_Closed">
+	<!--DataContext="{Binding Game, Source={StaticResource Locator}}">-->
 	<Window.Resources>
 		<DataTemplate x:Key="AnswerListTemplate">
 			<Button Content="{Binding AnswerText}" 
-					Command="{Binding Game.SelectAnswerCommand, Source={StaticResource Locator}}"
+					Command="{Binding SelectAnswerCommand}"
 					CommandParameter="{Binding}"
 					Margin="8" FontSize="13.333"
 					Padding="8"/>
@@ -41,7 +41,7 @@
 		<Border BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="0,0,0,1" Grid.Row="1">
 			<TextBlock Text="{Binding CurrentQuestion.Text}"
 				HorizontalAlignment="Center" 
-				VerticalAlignment="Center" Padding="8" FontSize="14.667" TextWrapping="Wrap"/>
+				VerticalAlignment="Center" Padding="8" FontSize="14.667" TextWrapping="Wrap" FontWeight="Bold"/>
 		</Border>
 
 		<Grid Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">

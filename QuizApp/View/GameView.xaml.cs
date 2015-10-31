@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace QuizApp.View
         public GameView()
         {
             InitializeComponent();
+        }
+
+        void Window_Closed(object sender, EventArgs e)
+        {
+            Messenger.Default.Send(new NotificationMessage("GameViewClosed"));
         }
     }
 }

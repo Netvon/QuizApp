@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
+using GalaSoft.MvvmLight;
 
 namespace QuizApp.Helpers
 {
@@ -62,6 +63,27 @@ namespace QuizApp.Helpers
             }           
         }
 
+        public void OpenWindow(string name, ViewModelBase viewModel)
+        {
+            var w = windows.Find(window => window.GetType().Name == name);
+
+            if (CanOpenWindow(name))
+            {
+                if (w != null)
+                    windows.Remove(w);
+
+                var types = from a in AppDomain.CurrentDomain.GetAssemblies()
+                            from t in a.GetTypes()
+                            where t.Name == name
+                            select t;
+
+                w = (Window)Activator.CreateInstance(types.First());
+                windows.Add(w);
+                w.DataContext = viewModel;
+                w.Show();
+            }
+        }
+
         public bool AskConfirmation(string promt, string owner)
         {
             var w = windows.FirstOrDefault(window => window.GetType().Name == owner);
@@ -82,6 +104,8 @@ namespace QuizApp.Helpers
 
             return false;
         }
+
+        
         #endregion
     }
 }
