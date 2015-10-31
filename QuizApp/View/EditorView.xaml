@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuizApp.View"
         mc:Ignorable="d"
-        Title="EditorView" Height="300" Width="300"
+        Title="Kwisspel beheer" Height="300" Width="300"
         DataContext="{Binding Editor, Source={StaticResource Locator}}" Closed="Window_Closed" MinWidth="300" MinHeight="300">
     <Window.Resources>
         <DataTemplate x:Key="QuizDataTemplate">

@@ -5,7 +5,7 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:QuizApp.View"
 		mc:Ignorable="d"
-		Title="GameView" Height="300" Width="300" Closed="Window_Closed">
+		Title="Kwisspel" Height="300" Width="300" Closed="Window_Closed" MinWidth="300" MinHeight="300">
 	<!--DataContext="{Binding Game, Source={StaticResource Locator}}">-->
 	<Window.Resources>
 		<DataTemplate x:Key="AnswerListTemplate">
@@ -29,6 +29,7 @@
 					<Label Content="Quiz: " Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
 					<Label Content="{Binding Quiz.Name}" Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
 				</StackPanel>
+				<Label Content="{Binding CurrentQuestion.Category.Name}" HorizontalAlignment="Center" Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
 				<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 					<Label Content="Vraag " Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}" />
 					<Label Content="{Binding CurrentQuestionCount}" Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkDarkBrushKey}}"/>
@@ -61,20 +62,27 @@
 			</StackPanel>
 		</Grid>
 
-		<Grid Visibility="{Binding DoneVisibility, FallbackValue=hidden}"  Grid.RowSpan="3" Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}">
-			<StackPanel  HorizontalAlignment="Center" VerticalAlignment="Center">
-				<Label Content="{Binding Quiz.Name}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="16" FontWeight="Bold"/>
-				<StackPanel Orientation="Horizontal">
-					<Label Content="Aantal vragen goed: "/>
-					<Label Content="{Binding CorrectCount}"/>
-				</StackPanel>
-				<StackPanel Orientation="Horizontal">
-					<Label Content="Aantal vragen fout: "/>
-					<Label Content="{Binding IncorrectCount}"/>
-				</StackPanel>
-				<Button Content="Sluit scherm" HorizontalAlignment="Center" Padding="8"
+		<Grid Visibility="{Binding DoneVisibility, FallbackValue=Hidden}"  Grid.RowSpan="3" Background="White">
+			<Border HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="1" Background="#FFFFF3BE" BorderBrush="#FF643200" Padding="16">
+				<StackPanel>
+					<Label Content="{Binding Quiz.Name, FallbackValue=Quiz}" 
+					   HorizontalContentAlignment="Center" 
+					   VerticalContentAlignment="Center" 
+					   FontSize="16" FontWeight="Bold"
+					   Padding="0"/>
+					<StackPanel Orientation="Horizontal" Margin="8,8,8,0">
+						<Label Content="Aantal vragen goed: " Padding="0"/>
+						<Label Content="{Binding CorrectCount, FallbackValue=0}" Padding="0"/>
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" Margin="8,0,8,8">
+						<Label Content="Aantal vragen fout: " Padding="0"/>
+						<Label Content="{Binding IncorrectCount, FallbackValue=0}" Padding="0"/>
+					</StackPanel>
+					<Button Content="Sluit scherm" HorizontalAlignment="Center" Padding="4"
 						Command="{Binding CloseWindowCommand}"/>
-			</StackPanel>
+				</StackPanel>
+			</Border>
+			
 			
 		</Grid>
 	</Grid>
