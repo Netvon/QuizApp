@@ -18,14 +18,22 @@
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
 			<RowDefinition/>
+			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
 
-		<Label Content="Kwisspel"
-			   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48"
-			   Foreground="#FF643200"
-			   Padding="32"/>
+		<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+			<Label Content="Kwisspel"
+				   FontSize="48"
+				   Foreground="#FF643200"
+				   HorizontalAlignment="Center"
+				   FontWeight="ExtraBlack"/>
+			<Label Content="Door Tom van Nimwegen en Thom Woltman"
+				   FontSize="13.333"
+				   Foreground="#7F643200"
+				   Padding="0" FontWeight="Light"/>
+		</StackPanel>
+		
 
 		<Border Grid.Row="1" Background="White"
 				Padding="32" BorderThickness="0,1,0,0"
@@ -36,7 +44,14 @@
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
-				<Button Command="{Binding OpenEditorCommand}" Content="Beheren" Grid.Column="0" Margin="0,0,8,0"/>
+				<Button Command="{Binding OpenEditorCommand}" Grid.Column="0" Margin="0,0,8,0">
+					<StackPanel>
+						<Label Content="&#xE713;" 
+							   FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets"
+							   FontSize="18.667" HorizontalAlignment="Center"/>
+						<Label Content="Beheren" Padding="0"/>
+					</StackPanel>
+				</Button>
 				<Grid Grid.Column="1" Margin="8,0,0,0">
 					<Grid.RowDefinitions>
 						<RowDefinition Height="Auto"/>
@@ -46,7 +61,17 @@
 											   ItemsSource="{Binding Editor.AllQuizes, Source={StaticResource Locator}}" 
 											   SelectedItem="{Binding SelectedQuiz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 											   ItemTemplate="{StaticResource QuizDataTemplate}"/>
-					<Button Command="{Binding OpenGameCommand}" Content="Spelen" Grid.Row="1"/>
+					<Button Command="{Binding OpenGameCommand}" Grid.Row="1"
+							Padding="8">
+						<StackPanel>
+							<Label Content="&#xE768;" 
+							   FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+								   HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+								   FontSize="18.667"/>
+							<Label Content="Spelen" Padding="0"
+								   />
+						</StackPanel>
+					</Button>
 				</Grid>
 
 			</Grid>

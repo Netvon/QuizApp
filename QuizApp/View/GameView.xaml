@@ -76,15 +76,17 @@
 
 		<Grid Visibility="{Binding DoneVisibility, FallbackValue=Hidden}"  Grid.RowSpan="3" 
 			  Background="#BF000000">
-			<Border VerticalAlignment="Center" BorderThickness="0,1,0,1" 
+			<ScrollViewer VerticalAlignment="Center"
 					Background="White"
-					BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" Padding="32" SnapsToDevicePixels="True">
+						  Padding="32" SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto">
 				<StackPanel>
-					<Label Content="{Binding Quiz.Name, FallbackValue=Quiz}" 
+					<Label Content="&#xE7C1;" 
 					   HorizontalContentAlignment="Center" 
 					   VerticalContentAlignment="Center" 
+					   FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" FontSize="48" Foreground="#FF05A213"/>
+					<TextBlock Text="{Binding Quiz.Name, FallbackValue=Quiz}" 
 					   FontSize="16" FontWeight="Bold"
-					   Padding="0"/>
+					   Padding="8" TextAlignment="Center" TextWrapping="Wrap"/>
 					<Label Content="Score" Padding="0" Margin="0, 32, 0, 0" HorizontalContentAlignment="Center" 
 					   VerticalContentAlignment="Center" FontSize="14.667"/>
 					<Grid Margin="0, 8, 0, 32">
@@ -110,8 +112,7 @@
 					<Button Content="Sluit scherm" HorizontalAlignment="Center" Padding="8"
 						Command="{Binding CloseWindowCommand}"/>
 				</StackPanel>
-			</Border>
-
+			</ScrollViewer>
 
 		</Grid>
 	</Grid>
