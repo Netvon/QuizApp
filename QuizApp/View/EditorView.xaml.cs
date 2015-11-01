@@ -29,5 +29,10 @@ namespace QuizApp.View
         {
             Messenger.Default.Send(new NotificationMessage("EditorViewClosed"));
         }
+
+        private void QuizEditor_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

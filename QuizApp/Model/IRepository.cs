@@ -15,5 +15,7 @@ namespace QuizApp.Model
         void Save();
         IEnumerable<T> GetAllItems();
         IQueryable<T> AsQueryable();
+
+        void AddAnswer(Answer Answer);
     }
 }

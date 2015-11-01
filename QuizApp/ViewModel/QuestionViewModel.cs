@@ -18,6 +18,7 @@ namespace QuizApp.ViewModel
         CategoryViewModel _category;
 
         public RelayCommand AddQuestionCommand { get; set; }
+        public RelayCommand RemoveQuestionCommand { get; set; }
 
         public string Text
         {
@@ -32,6 +33,18 @@ namespace QuizApp.ViewModel
             }
         }
 
+        public string CategoryName
+        {
+            get
+            {
+                return POCO.CategoryName;
+            }
+            set
+            {
+                POCO.CategoryName = value;
+                RaisePropertyChanged();
+            }
+        }
         public CategoryViewModel Category
         {
             get
@@ -41,7 +54,8 @@ namespace QuizApp.ViewModel
             set
             {
                 _category = value;
-                RaisePropertyChanged();
+                CategoryName = _category.Name;
+                RaisePropertyChanged("Category");
             }
         }
 
@@ -59,6 +73,7 @@ namespace QuizApp.ViewModel
             Category = new CategoryViewModel(poco.Category, _catRepo, _notificationService);
 
             AddQuestionCommand = new RelayCommand(OnAddQuestion, CanAddQuestion);
+            RemoveQuestionCommand = new RelayCommand(OnRemoveQuestion, CanRemoveQuestion);
         }
 
         async void OnAddQuestion()
@@ -67,6 +82,17 @@ namespace QuizApp.ViewModel
             _questionRepo.Add(POCO);
 
             await _questionRepo.SaveAsync();
+        }
+
+        async void OnRemoveQuestion()
+        {
+            _questionRepo.Remove(POCO);
+            await _questionRepo.SaveAsync();
+        }
+
+        public bool CanRemoveQuestion()
+        {
+            return !string.IsNullOrEmpty(POCO.Text);
         }
 
         public void OnAddQuestionTest()
@@ -79,12 +105,12 @@ namespace QuizApp.ViewModel
 
         public bool CanAddQuestion()
         {
-            if (string.IsNullOrEmpty(Text) || !Answers.AsQueryable().Any(r => r.IsCorrect) || !Answers.AsQueryable().Any(r => !r.IsCorrect))
+            if (string.IsNullOrEmpty(Text) || !POCO.Answers.AsQueryable().Any(r => r.IsCorrect) || !POCO.Answers.AsQueryable().Any(r => !r.IsCorrect))
             {
                 return false;
             }
 
-            if(_questionRepo.GetAllItems().AsQueryable().Any(r => r.Text.ToLower().Equals(Text.ToLower())) || Answers.Count() > 4 || Answers.Count() < 2) 
+            if (Answers.Count() > 4 || Answers.Count() < 2)
             {
                 return false;
             }
