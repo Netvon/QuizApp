@@ -22,6 +22,7 @@
 				<ColumnDefinition Width="Auto"/>
 				<ColumnDefinition/>
 				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
 			</Grid.ColumnDefinitions>
 
 			<Label Content="Naam" FontSize="10.667" VerticalAlignment="Center" Padding="8" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
@@ -31,7 +32,22 @@
 			<Button Grid.Column="2" Command="{Binding Category.AddCategoryCommand}" Margin="8,0,0,0"
 					Content="&#xE74E;"
 					FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
-					TextOptions.TextFormattingMode="Display" FontSize="16" Padding="8"/>
+					TextOptions.TextFormattingMode="Display" FontSize="14.667" Padding="8"/>
+			<Border Grid.Column="3" Margin="8,0,0,0" Padding="8" ToolTipService.IsEnabled="True" Cursor="Help" BorderBrush="#FF239FF5" 
+                    BorderThickness="1" Background="#19239FF5" SnapsToDevicePixels="True">
+				<TextBlock Text="&#xE897;" 
+							   TextWrapping="Wrap" Foreground="#FF239FF5"
+							   FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets"
+								HorizontalAlignment="Center" VerticalAlignment="Center" 
+								FontSize="10.667" FontWeight="Bold" />
+				<Border.ToolTip>
+					<StackPanel>
+						<Label Content="Help informatie." Padding="0" FontWeight="Bold"/>
+						<Label Content="Geen een naam op voor een nieuwe categorie en druk vervolgens op de" Padding="0"/>
+						<Label Content="saveknop om de nieuwe categorie toe te voegen" Padding="0"/>
+					</StackPanel>
+				</Border.ToolTip>
+			</Border>
 		</Grid>
 		
 		<ListView Grid.Row="1" Margin="0,8,0,0"

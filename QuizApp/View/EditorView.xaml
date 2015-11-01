@@ -56,9 +56,9 @@
 								<Border.ToolTip>
 									<StackPanel>
 										<Label Content="Help informatie." Padding="0" FontWeight="Bold"/>
-										<Label Content="Selecteer hieronder een Quiz om er vragen eraan toe te voegen of te verwijderen." Padding="0"/>
-										<Label Content="Via de plus- en minknop kan je ook een Quiz toevoegen of verwijderen. Na het" Padding="0"/>
-										<Label Content="toevoegen van een Quiz kan je vragen toe voegen aan de Quiz. Een Quiz bevat" Padding="0"/>
+										<Label Content="Selecteer hiernaast een quiz om er vragen eraan toe te voegen of te verwijderen." Padding="0"/>
+										<Label Content="Via de plus- en deleteknop kan je ook een quiz toevoegen of verwijderen. Na het" Padding="0"/>
+										<Label Content="toevoegen van een quiz kan je vragen toe voegen aan de Quiz. Een quiz bevat" Padding="0"/>
 										<Label Content="minimaal 2 en maximaal 10 vragen." Padding="0"/>
 									</StackPanel>
 								</Border.ToolTip>
@@ -81,10 +81,9 @@
 
 			</TabItem>
 			<TabItem Header="Categoriën overzicht" Padding="8">
-				<local:CategoryEditor Padding="8"
+				<local:CategoryEditor Padding="16"
 									  CategorySource="{Binding Editor.AllCategories, Source={StaticResource Locator}}" 
-									  Category="{Binding Editor.NewCategory, Source={StaticResource Locator}}"
-									  Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+									  Category="{Binding Editor.NewCategory, Source={StaticResource Locator}}"/>
 			</TabItem>
 		</TabControl>
 		<Grid Visibility="{Binding LoadingVisibility, FallbackValue=Hidden}" Background="#BF000000">

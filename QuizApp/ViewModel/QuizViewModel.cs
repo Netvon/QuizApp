@@ -151,7 +151,7 @@ namespace QuizApp.ViewModel
             if (SelectedDropdownQuestion == null)
                 return;
 
-            POCO.Questions.Add(new QuizQuestion() { Question = SelectedDropdownQuestion.POCO, Quiz = POCO });
+            POCO.Questions.Add(new QuizQuestion() { Question = SelectedDropdownQuestion.POCO, Quiz = POCO, QuestionID = SelectedDropdownQuestion.POCO.QuestionID, QuizName = POCO.QuizName });
             Questions.Add(SelectedDropdownQuestion);
             SelectedDropdownQuestion = null;
             AddQuizCommand.RaiseCanExecuteChanged();
@@ -218,8 +218,8 @@ namespace QuizApp.ViewModel
 
         public async Task AddGivenAnswerToQuestion(QuestionViewModel question, Answer answer)
         {
-            var qq = POCO.Questions.FirstOrDefault(q => q.Question == question.POCO);
-            qq.GivenAnswer = answer;
+            var qq = POCO.Questions.FirstOrDefault(q => q.Question.QuestionID == question.POCO.QuestionID);
+            //qq.GivenAnswer = answer;
             qq.GivenAnswerText = answer.AnswerText;
 
             await _quizRepo.SaveAsync();
