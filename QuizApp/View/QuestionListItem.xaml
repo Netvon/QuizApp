@@ -7,11 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <StackPanel>
+        <StackPanel HorizontalAlignment="Left">
             <Label Content="{Binding Text}" Margin="0" Padding="0"/>
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Categorie: " Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                <Label Content="{Binding Category.Name}" Margin="0" Padding="0" FontSize="9.333" Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+            <StackPanel Orientation="Horizontal" Visibility="{Binding DetailsVisibility, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:QuestionListItem}}}">
+                <Label Content="Categorie: " Margin="0" Padding="0" Opacity="0.5"/>
+                <Label Content="{Binding Category.Name}" Margin="0" Padding="0" Opacity="0.5"/>
             </StackPanel>
         </StackPanel>
     </Grid>

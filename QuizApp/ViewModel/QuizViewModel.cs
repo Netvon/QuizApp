@@ -136,7 +136,7 @@ namespace QuizApp.ViewModel
 
         bool CanAddQuiz()
         {
-            if (Questions.Count < 2 || Questions.Count > 10)
+            if (Questions.Count < 2 || Questions.Count > 10 || string.IsNullOrWhiteSpace(Name))
                 return false;
 
             var tst = _quizRepo.GetAllItems();

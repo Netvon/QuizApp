@@ -51,10 +51,8 @@ namespace QuizApp.ViewModel
 
             SimpleIoc.Default.Register<QuizContext>();
 
-            if (ViewModelBase.IsInDesignModeStatic)
-                SimpleIoc.Default.Register<IRepository<Category>, DesignTimeCategoryRepository>();
-            else
-                SimpleIoc.Default.Register<IRepository<Category>, DatabaseCategoryRepository>();
+            
+            SimpleIoc.Default.Register<IRepository<Category>, DatabaseCategoryRepository>();
 
             SimpleIoc.Default.Register<IRepository<Question>, DatabaseQuestionRepository>();
             SimpleIoc.Default.Register<IRepository<Quiz>, DatabaseQuizRepository>();

@@ -210,7 +210,10 @@ namespace QuizApp.ViewModel
 
         bool CanRemoveQuiz()
         {
-            return !string.IsNullOrEmpty(SelectedQuiz.Name);
+            if (SelectedQuiz != null)
+                return !string.IsNullOrEmpty(SelectedQuiz.Name);
+
+            return false;
             //return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
         }
 

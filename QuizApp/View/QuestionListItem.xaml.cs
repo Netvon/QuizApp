@@ -20,6 +20,19 @@ namespace QuizApp.View
     /// </summary>
     public partial class QuestionListItem : UserControl
     {
+
+
+        public Visibility DetailsVisibility
+        {
+            get { return (Visibility)GetValue(DetailsVisibilityProperty); }
+            set { SetValue(DetailsVisibilityProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for DetailsVisibility.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty DetailsVisibilityProperty =
+            DependencyProperty.Register("DetailsVisibility", typeof(Visibility), typeof(QuestionListItem), new PropertyMetadata(Visibility.Visible));
+
+
         public QuestionListItem()
         {
             InitializeComponent();

@@ -1,38 +1,41 @@
 ﻿<UserControl x:Class="QuizApp.View.CategoryEditor"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:QuizApp.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <DataTemplate x:Key="CategoryDataTemplate">
-            <local:CategoryListItem/>
-        </DataTemplate>
-    </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+			 xmlns:local="clr-namespace:QuizApp.View"
+			 mc:Ignorable="d" 
+			 d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<DataTemplate x:Key="CategoryDataTemplate">
+			<local:CategoryListItem/>
+		</DataTemplate>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="80"/>
-            </Grid.ColumnDefinitions>
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
 
-            <Label Content="Naam" FontSize="10.667" VerticalAlignment="Center" Padding="0" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
-            <TextBox Text="{Binding Category.Name, 
-                Mode=TwoWay,
-                UpdateSourceTrigger=PropertyChanged}"  Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="40,0,0,0"/>
-            <Button Content="Toevoegen" Grid.Column="2" Command="{Binding Category.AddCategoryCommand}" Margin="8,0,0,0"/>
-        </Grid>
-        
-        <ListView Grid.Row="1" Margin="0,8,0,0"
-                  ItemsSource="{Binding CategorySource}"
-                  ItemTemplate="{StaticResource CategoryDataTemplate}"/>
-    </Grid>
+			<Label Content="Naam" FontSize="10.667" VerticalAlignment="Center" Padding="8" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+			<TextBox Text="{Binding Category.Name, 
+				Mode=TwoWay,
+				UpdateSourceTrigger=PropertyChanged}"  Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="44,0,0,0"/>
+			<Button Grid.Column="2" Command="{Binding Category.AddCategoryCommand}" Margin="8,0,0,0"
+					Content="&#xE74E;"
+					FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+					TextOptions.TextFormattingMode="Display" FontSize="16" Padding="8"/>
+		</Grid>
+		
+		<ListView Grid.Row="1" Margin="0,8,0,0"
+				  ItemsSource="{Binding CategorySource}"
+				  ItemTemplate="{StaticResource CategoryDataTemplate}"/>
+	</Grid>
 </UserControl>
