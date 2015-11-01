@@ -21,17 +21,17 @@
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="100*"/>
-		</Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
 
 		<Grid Grid.Row="0" Margin="0,0,0,8">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
 				<ColumnDefinition Width="40"/>
 				<ColumnDefinition Width="40"/>
-				<ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
 			</Grid.ColumnDefinitions>
-
+			
 			<toolkit:WatermarkComboBox ItemsSource="{Binding AllQuestions}" 
 									   SelectedItem="{Binding SelectedQuestion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
 									   ItemTemplate="{StaticResource QuestionDataTemplate}"
@@ -49,22 +49,22 @@
 					FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 					TextOptions.TextFormattingMode="Display" FontSize="13.333"/>
 			<Border Grid.Column="3" Margin="8,0,0,0" Padding="8" ToolTipService.IsEnabled="True" Cursor="Help" BorderBrush="#FF239FF5" BorderThickness="1" Background="#19239FF5" SnapsToDevicePixels="True">
-				<TextBlock Text="&#xE897;" 
+                <TextBlock Text="&#xE897;" 
 							   TextWrapping="Wrap" Foreground="#FF239FF5"
 							   FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets"
 								HorizontalAlignment="Center" VerticalAlignment="Center" 
 								FontSize="10.667" FontWeight="Bold" />
-				<Border.ToolTip>
-					<StackPanel>
-						<Label Content="Help informatie." Padding="0" FontWeight="Bold"/>
-						<Label Content="Selecteer hiernaast een vraag om er antwoorden eraan toe te voegen of te verwijderen." Padding="0"/>
-						<Label Content="Via de plus- en deleteknop kan je ook een antwoord toevoegen of verwijderen. Na het" Padding="0"/>
-						<Label Content="toevoegen van een vraag kan je antwoorden toe voegen aan de vraag. Een vraag bevat" Padding="0"/>
-						<Label Content="minimaal 2 en maximaal 4 antwoorden." Padding="0"/>
-					</StackPanel>
-				</Border.ToolTip>
-			</Border>
-		</Grid>
+                <Border.ToolTip>
+                    <StackPanel>
+                        <Label Content="Help informatie." Padding="0" FontWeight="Bold"/>
+                        <Label Content="Selecteer hiernaast een vraag om er antwoorden eraan toe te voegen of te verwijderen." Padding="0"/>
+                        <Label Content="Via de plus- en deleteknop kan je ook een antwoord toevoegen of verwijderen. Na het" Padding="0"/>
+                        <Label Content="toevoegen van een vraag kan je antwoorden toe voegen aan de vraag. Een vraag bevat" Padding="0"/>
+                        <Label Content="minimaal 2 en maximaal 4 antwoorden." Padding="0"/>
+                    </StackPanel>
+                </Border.ToolTip>
+            </Border>
+        </Grid>
 
 		<Grid Grid.Row="1" Margin="0,8">
 			<Grid.ColumnDefinitions>
@@ -85,15 +85,15 @@
 								<StackPanel Orientation="Horizontal" >
 									<Label Content="Categorie: " Margin="0" Padding="0" Opacity="0.5"/>
 									<Label Content="{Binding Name}" Margin="0" Padding="0" Opacity="0.5"/>
-								</StackPanel>
+								</StackPanel> 
 							</StackPanel>
 						</Grid>
 					</DataTemplate>
 				</ComboBox.ItemTemplate>
-
+				
 			</toolkit:WatermarkComboBox >
 		</Grid>
-
+		
 		<Grid Grid.Row="2">
 			<Grid Margin="0,8">
 				<Grid.ColumnDefinitions>
@@ -106,15 +106,15 @@
 				<TextBox Text="{Binding SelectedQuestion.Text}" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="40,0,0,0" 
 						 IsReadOnly="{Binding CanEditQuestion}"/>
 				<!--<Button Command="{Binding AddQuestionCommand }" Content="Toevoegen" Grid.Column="2" Margin="8,0,0,0"/>-->
-				<Button Command="{Binding SaveQuestionCommand}"  
+                <Button Command="{Binding SaveQuestionCommand}"  
 						Grid.Column="2" Margin="8,0,0,0" Padding="8"
 						ToolTip="Klik hier om de nieuwe vraag toe te voegen. Dit kan alleen als er nog geen vraag met deze naam is en de vraag minimaal twee en maximaal 4 antwoorden bevat"
 						Content="&#xE74E;"
-						FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+                        FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 									TextOptions.TextFormattingMode="Display" FontSize="16"/>
-			</Grid>
+            </Grid>
 		</Grid>
-
+		
 		<Grid Grid.Row="4" Margin="0,8,0,0">
 			<Border Padding="0,0,0,0" Background="White" 
 					BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="1" >
@@ -127,34 +127,34 @@
 					<Border Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" 
 					BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="0,0,0,1" SnapsToDevicePixels="True">
 						<Grid Margin="8">
-							<Grid.RowDefinitions>
-								<RowDefinition Height="Auto"/>
-							</Grid.RowDefinitions>
-							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition />
-								<ColumnDefinition Width="Auto"/>
-								<ColumnDefinition Width="Auto"/>
-							</Grid.ColumnDefinitions>
-							<Label Content="Antwoord" FontSize="10.667" VerticalAlignment="Center" Padding="8" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
-							<TextBox Text="{Binding InputAnswer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Padding="63,0,0,0" VerticalContentAlignment="Center"/>
-							<Button Content="&#xE74D;" Margin="8,0,0,0" Grid.Column="3"
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition />
+				<ColumnDefinition Width="Auto"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
+			<Label Content="Antwoord" FontSize="10.667" VerticalAlignment="Center" Padding="8" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+			<TextBox Text="{Binding InputAnswer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.ColumnSpan="2" Padding="63,0,0,0" VerticalContentAlignment="Center"/>
+            <Button Content="&#xE74D;" Margin="8,0,0,0" Grid.Column="3"
 					Command="{Binding RemoveAnswerCommand}" Padding="8"
 					ToolTip="Klik hier om de geselecteerde Question te verwijderen"
-					FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+                    FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 					TextOptions.TextFormattingMode="Display" FontSize="13.333"/>
-							<Button Content="&#xE710;" Margin="8,0,0,0" Grid.Column="2"
+            <Button Content="&#xE710;" Margin="8,0,0,0" Grid.Column="2"
 					Command="{Binding AddAnswerCommand}" Padding="8"
 					ToolTip="Klik hier om een nieuwe Question toe te voegen"
-					FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+                    FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 					TextOptions.TextFormattingMode="Display" FontSize="13.333"/>
-						</Grid>
+		</Grid>
 					</Border>
-					
+
 
 					<ListView ItemsSource="{Binding SelectedQuestion.Answers}" 
-							  SelectedItem="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-							  SnapsToDevicePixels="True"
+                              SelectedItem="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              SnapsToDevicePixels="True"
 							  HorizontalContentAlignment="Stretch"
 							  BorderThickness="0" Grid.Row="1">
 						<ListView.ItemTemplate>
@@ -166,8 +166,8 @@
 									</Grid.ColumnDefinitions>
 
 									<Label Content="{Binding AnswerText}" Grid.Column="0" Padding="0"/>
-									<CheckBox Content="Is juist" IsChecked="{Binding IsCorrect}" IsEnabled="{Binding CanUncheck, UpdateSourceTrigger=PropertyChanged}" 
-											  Grid.Column="1"/>
+									<CheckBox Content="Is juist" IsChecked="{Binding IsCorrect}" 
+                                              Grid.Column="1"/>
 								</Grid>
 							</DataTemplate>
 						</ListView.ItemTemplate>
@@ -177,8 +177,8 @@
 
 			</Border>
 		</Grid>
-
-
+		
+		
 	</Grid>
 
 </UserControl>

@@ -355,7 +355,7 @@ namespace QuizApp.ViewModel
 
         bool CanAddAnswer()
         {       
-            return (!string.IsNullOrEmpty(InputAnswer) && SelectedQuestion.Answers.Count() < 4);
+            return (!string.IsNullOrEmpty(InputAnswer) && SelectedQuestion.Answers.Count() < 4 && !_selectedQuestion.Answers.AsQueryable().Any(r => r.AnswerText.Equals(InputAnswer)));
         }
 
         void OnAddAnwer()
