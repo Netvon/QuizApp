@@ -84,6 +84,7 @@ namespace QuizApp.ViewModel
         {
             get
             {
+                SaveQuestionCommand.RaiseCanExecuteChanged();
                 return _selectedQuestion;
             }
             set
@@ -95,7 +96,6 @@ namespace QuizApp.ViewModel
                 
                 RaisePropertyChanged("SelectedQuestion");               
                 RaisePropertyChanged("CanEditQuestion");
-                SaveQuestionCommand.RaiseCanExecuteChanged();
                 RemoveQuestionCommand.RaiseCanExecuteChanged();
             }
         }
@@ -133,14 +133,14 @@ namespace QuizApp.ViewModel
         {
             get
             {
-                SaveQuestionCommand.RaiseCanExecuteChanged();
+                
                 return _selectedAnswer;
             }
             set
             {
                 _selectedAnswer = value;
                 RaisePropertyChanged("Answer");
-                
+                SaveQuestionCommand.RaiseCanExecuteChanged();
                 AddAnswerCommand.RaiseCanExecuteChanged();
                 RemoveAnswerCommand.RaiseCanExecuteChanged();
             }
@@ -309,14 +309,18 @@ namespace QuizApp.ViewModel
             }
             SelectedQuestion.POCO.Category = cat;
             
+            
             if (_questionRepo.GetAllItems().AsQueryable().Any(r => r.Text.Contains(SelectedQuestion.Text)))
             {
                 _questionRepo.SaveAsync();
+                _notificationService.DisplayMessage("QuizViewModel", "Vraag \"" + SelectedQuestion.Text + "\" opgeslagen.");
             }
             else
             {
                 _questionRepo.Add(SelectedQuestion.POCO);
-            }          
+                _notificationService.DisplayMessage("QuizViewModel", "Vraag \"" + SelectedQuestion.Text + "\" toegevoegd.");
+            }
+            
         }
         void OnAddQuiz()
         {
@@ -336,8 +340,7 @@ namespace QuizApp.ViewModel
 
         bool CanSaveQuestion()
         {
-            return SelectedQuestion.CanAddQuestion();
-            
+            return _selectedQuestion.CanAddQuestion();          
         }
 
         bool CanRemoveQuestion()

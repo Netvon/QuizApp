@@ -17,19 +17,19 @@
 	<Grid>
 
 		<Grid.RowDefinitions>
+			<RowDefinition Height="50"/>
 			<RowDefinition Height="Auto"/>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="40"/>
 			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="100*"/>
-			<RowDefinition Height="40"/>
-		</Grid.RowDefinitions>
+            <RowDefinition Height="100*"/>
+        </Grid.RowDefinitions>
 
 		<Grid Grid.Row="0" Margin="8">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition/>
 				<ColumnDefinition Width="40"/>
 				<ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
 			</Grid.ColumnDefinitions>
 			
 			<toolkit:WatermarkComboBox ItemsSource="{Binding AllQuestions}" 
@@ -48,8 +48,23 @@
 					ToolTip="Klik hier om een nieuwe Question toe te voegen"
 					FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 					TextOptions.TextFormattingMode="Display" FontSize="13.333"/>
-
-		</Grid>
+            <Border Grid.Column="3" Margin="8,0,0,0" Padding="8" ToolTipService.IsEnabled="True" Cursor="Help" BorderBrush="#FF239FF5" BorderThickness="1" Background="#19239FF5">
+                <TextBlock Text="&#xE897;" 
+							   TextWrapping="Wrap" Foreground="#FF239FF5"
+							   FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets"
+								HorizontalAlignment="Center" VerticalAlignment="Center" 
+								FontSize="10.667" FontWeight="Bold" />
+                <Border.ToolTip>
+                    <StackPanel>
+                        <Label Content="Help informatie." Padding="0" FontWeight="Bold"/>
+                        <Label Content="Selecteer hiernaast een vraag om er antwoorden eraan toe te voegen of te verwijderen." Padding="0"/>
+                        <Label Content="Via de plus- en deleteknop kan je ook een antwoord toevoegen of verwijderen. Na het" Padding="0"/>
+                        <Label Content="toevoegen van een vraag kan je antwoorden toe voegen aan de vraag. Een vraag bevat" Padding="0"/>
+                        <Label Content="minimaal 2 en maximaal 4 antwoorden." Padding="0"/>
+                    </StackPanel>
+                </Border.ToolTip>
+            </Border>
+        </Grid>
 
 		<Grid Grid.Row="1" Margin="8">
 			<Grid.ColumnDefinitions>
@@ -84,14 +99,20 @@
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="40"/>
 					<ColumnDefinition Width="20*"/>
-					<ColumnDefinition Width="80"/>
+					<ColumnDefinition Width="45"/>
 				</Grid.ColumnDefinitions>
 
 				<Label Content="Vraag:" FontSize="10.667" VerticalAlignment="Center" Padding="0" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
 				<TextBox Text="{Binding SelectedQuestion.Text}" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="40,0,0,0" 
 						 IsReadOnly="{Binding CanEditQuestion}"/>
 				<!--<Button Command="{Binding AddQuestionCommand }" Content="Toevoegen" Grid.Column="2" Margin="8,0,0,0"/>-->
-			</Grid>
+                <Button Command="{Binding SaveQuestionCommand}"  
+						Grid.Column="2" Margin="8,0,0,0" Padding="8"
+						ToolTip="Klik hier om de nieuwe vraag toe te voegen. Dit kan alleen als er nog geen vraag met deze naam is en de vraag minimaal twee en maximaal 4 antwoorden bevat"
+						Content="&#xE74E;"
+                        FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+									TextOptions.TextFormattingMode="Display" FontSize="16"/>
+            </Grid>
 		</Grid>
 		
 		<Grid Grid.Row="3" Margin="8">
@@ -123,7 +144,7 @@
 					BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="1" >
 				<Grid>
 					<ListView ItemsSource="{Binding SelectedQuestion.Answers}" 
-                              SelectedItem="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              SelectedItem="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                               SnapsToDevicePixels="True"
                               HorizontalContentAlignment="Stretch">
 						<ListView.ItemTemplate>
@@ -146,14 +167,7 @@
 
 			</Border>
 		</Grid>
-		<Grid Grid.Row="5">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="80"/>
-			</Grid.ColumnDefinitions>
-			
-			<Button Grid.Row="4" Margin="8" Padding="0" Content="Opslaan" Command="{Binding SaveQuestionCommand}"/>
-
-		</Grid>
+		
 		
 	</Grid>
 

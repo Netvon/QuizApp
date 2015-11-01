@@ -110,7 +110,7 @@ namespace QuizApp.ViewModel
                 return false;
             }
 
-            if (Answers.Count() > 4 || Answers.Count() < 2)
+            if (Answers.Count() > 4 || Answers.Count() < 2 || POCO.Category == null)
             {
                 return false;
             }
