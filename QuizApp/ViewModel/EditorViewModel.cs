@@ -16,7 +16,7 @@ namespace QuizApp.ViewModel
     public class EditorViewModel : ViewModelBase
     {
         QuizViewModel _selectedQuiz;
-        String _inputAnswer;
+        string _inputAnswer;
         QuestionViewModel _selectedQuestion;
         IRepository<Quiz> _quizRepo;
         IRepository<Question> _questionRepo;
@@ -45,7 +45,7 @@ namespace QuizApp.ViewModel
         public RelayCommand RemoveAnswerCommand { get; set; }
         public RelayCommand CloseNotificationCommand { get; set; }
 
-        public Boolean CanUncheck
+        public bool CanUncheck
         {
             get 
             {
