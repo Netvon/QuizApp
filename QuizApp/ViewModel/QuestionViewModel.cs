@@ -18,6 +18,7 @@ namespace QuizApp.ViewModel
         CategoryViewModel _category;
 
         public RelayCommand AddQuestionCommand { get; set; }
+        public RelayCommand RemoveQuestionCommand { get; set; }
 
         public string Text
         {
@@ -59,6 +60,7 @@ namespace QuizApp.ViewModel
             Category = new CategoryViewModel(poco.Category, _catRepo, _notificationService);
 
             AddQuestionCommand = new RelayCommand(OnAddQuestion, CanAddQuestion);
+            RemoveQuestionCommand = new RelayCommand(OnRemoveQuestion, CanRemoveQuestion);
         }
 
         async void OnAddQuestion()
@@ -67,6 +69,17 @@ namespace QuizApp.ViewModel
             _questionRepo.Add(POCO);
 
             await _questionRepo.SaveAsync();
+        }
+
+        async void OnRemoveQuestion()
+        {
+            _questionRepo.Remove(POCO);
+            await _questionRepo.SaveAsync();
+        }
+
+        public bool CanRemoveQuestion()
+        {
+            return !string.IsNullOrEmpty(POCO.Text);
         }
 
         public void OnAddQuestionTest()

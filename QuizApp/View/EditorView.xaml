@@ -14,7 +14,7 @@
     </Window.Resources>
 
     <Grid>
-        <TabControl Margin="6" SelectedIndex="{Binding SelectedTabIndex}" Padding="0">
+        <TabControl Margin="10,10,2,2" SelectedIndex="{Binding SelectedTabIndex}" Padding="0">
             <TabItem Header="Quiz">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -53,7 +53,7 @@
 
             </TabItem>
             <TabItem Header="Vragen">
-
+                <local:QuestionEditor />
             </TabItem>
             <TabItem Header="Categoriën">
                 <local:CategoryEditor Padding="8"

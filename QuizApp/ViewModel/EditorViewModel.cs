@@ -16,11 +16,14 @@ namespace QuizApp.ViewModel
     public class EditorViewModel : ViewModelBase
     {
         QuizViewModel _selectedQuiz;
+        String _inputAnswer;
+        QuestionViewModel _selectedQuestion;
         IRepository<Quiz> _quizRepo;
         IRepository<Question> _questionRepo;
         IRepository<Category> _categoryRepo;
         Visibility _loadingVisibility;
         Visibility _notificationVisibility;
+        Answer _selectedAnswer;
         string _notificationMessage;
         int _selectedTabIndex;
 
@@ -30,6 +33,16 @@ namespace QuizApp.ViewModel
 
         public RelayCommand RemoveQuizCommand { get; set; }
         public RelayCommand AddQuizCommand { get; set; }
+
+        public RelayCommand RemoveQuestionCommand { get; set; }
+
+        public RelayCommand AddQuestionCommand { get; set; }
+
+        public RelayCommand SaveQuestionCommand { get; set; }
+
+        public RelayCommand AddAnswerCommand { get; set; }
+
+        public RelayCommand RemoveAnswerCommand { get; set; }
         public RelayCommand CloseNotificationCommand { get; set; }
 
         public Visibility LoadingVisibility
@@ -58,6 +71,40 @@ namespace QuizApp.ViewModel
             }
         }
 
+        public QuestionViewModel SelectedQuestion
+        {
+            get
+            {
+                return _selectedQuestion;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedQuestion = value;
+                }
+                
+                RaisePropertyChanged("SelectedQuestion");               
+                RaisePropertyChanged("CanEditQuestion");
+
+                RemoveQuestionCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        public String InputAnswer
+        {
+            get
+            {
+                return _inputAnswer;
+            }
+            set
+            {
+                _inputAnswer = value;
+                RaisePropertyChanged("InputAnswer");
+                AddAnswerCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public QuizViewModel SelectedQuiz
         {
             get
@@ -69,7 +116,22 @@ namespace QuizApp.ViewModel
                 _selectedQuiz = value;
                 RaisePropertyChanged("SelectedQuiz");
                 RaisePropertyChanged("CanEditQuiz");
-                RemoveQuizCommand.RaiseCanExecuteChanged();
+                
+            }
+        }
+
+        public Answer Answer
+        {
+            get
+            {
+                return _selectedAnswer;
+            }
+            set
+            {
+                _selectedAnswer = value;
+                RaisePropertyChanged("Answer");
+                AddAnswerCommand.RaiseCanExecuteChanged();
+                RemoveAnswerCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -99,6 +161,8 @@ namespace QuizApp.ViewModel
             }
         }
 
+        
+
         public bool CanEditQuiz
         {
             get
@@ -107,6 +171,18 @@ namespace QuizApp.ViewModel
                     return AllQuizes.Contains(SelectedQuiz);
 
                 return false;
+            }
+        }
+
+        public bool CanEditQuestion
+        {
+            get
+            {
+                if (AllQuestions != null) {
+                    return !string.IsNullOrEmpty(SelectedQuestion.Text); 
+                }
+                    
+                return true;
             }
         }
 
@@ -137,6 +213,11 @@ namespace QuizApp.ViewModel
 
             RemoveQuizCommand = new RelayCommand(OnRemoveQuiz, CanRemoveQuiz);
             AddQuizCommand = new RelayCommand(OnAddQuiz);
+            RemoveQuestionCommand = new RelayCommand(OnRemoveQuestion, CanRemoveQuestion);
+            AddQuestionCommand = new RelayCommand(OnAddQuestion);
+            AddAnswerCommand = new RelayCommand(OnAddAnwer, CanAddAnswer);
+            RemoveAnswerCommand = new RelayCommand(OnRemoveAnswer, CanRemoveAnswer);
+            SaveQuestionCommand = new RelayCommand(OnSaveQuestion);
             CloseNotificationCommand = new RelayCommand(OnCloseNotification);
 
             Task.Run(() =>
@@ -178,6 +259,7 @@ namespace QuizApp.ViewModel
             });            
 
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, notificationService);
+            SelectedQuestion = new QuestionViewModel(new Question() { Answers = new List<Answer>(), Category = new Category() }, _questionRepo, _categoryRepo, _notificationService);
             NewCategory = new CategoryViewModel(new Category(), _categoryRepo, _notificationService);
             //SelectedTabIndex = 1;
         }
@@ -196,6 +278,12 @@ namespace QuizApp.ViewModel
             NotificationVisibility = Visibility.Hidden;
         }
 
+        void OnSaveQuestion()
+        {
+            SelectedQuestion.POCO.Category = (new Category() { Name = "Category 1" });
+            SelectedQuestion.POCO.CategoryName = "Category 1";
+            SelectedQuestion.AddQuestionCommand.Execute(null);
+        }
         void OnAddQuiz()
         {
             SelectedQuiz = new QuizViewModel(new Quiz() { Questions = new List<QuizQuestion>() }, _quizRepo, _questionRepo, _categoryRepo, _notificationService);
@@ -209,6 +297,36 @@ namespace QuizApp.ViewModel
             //return SelectedQuiz.RemoveQuizCommand.CanExecute(null);
         }
 
+        bool CanRemoveQuestion()
+        {
+            return !string.IsNullOrEmpty(SelectedQuestion.Text);
+        }
+
+        bool CanRemoveAnswer()
+        {
+            return SelectedQuestion.Answers.Contains(Answer);
+        }
+
+        bool CanAddAnswer()
+        {       
+            return !string.IsNullOrEmpty(InputAnswer);
+        }
+
+        void OnAddAnwer()
+        {         
+            Answer = new Answer() { AnswerText = InputAnswer, AnswerToQuestion = SelectedQuestion.POCO, IsCorrect = false };
+            SelectedQuestion.Answers.Add(Answer);
+            SelectedQuestion.POCO.Answers.Add(Answer);
+            Answer = new Answer() { AnswerText = "", AnswerToQuestion = SelectedQuestion.POCO, IsCorrect = false };
+            InputAnswer = "";
+        }
+
+        void OnRemoveAnswer()
+        {
+            SelectedQuestion.Answers.Remove(Answer);
+            Answer = new Answer();
+        }
+
         void OnRemoveQuiz()
         {
             if(_windowService.AskConfirmation("Wil je deze Quiz echt verwijderen?", "EditorView"))
@@ -219,6 +337,25 @@ namespace QuizApp.ViewModel
                 RemoveQuizCommand.RaiseCanExecuteChanged();
             }
             
+        }
+
+        void OnRemoveQuestion()
+        {
+            if (_windowService.AskConfirmation("Wil je deze vraag echt verwijderen?", "EditorView"))
+            {
+                SelectedQuestion.RemoveQuestionCommand.Execute(null);
+                AllQuestions.Remove(SelectedQuestion);
+                SelectedQuestion = new QuestionViewModel(new Question() { Text = "", Answers = new List<Answer>(), Category = new Category() }, _questionRepo, _categoryRepo, _notificationService);
+                RemoveQuestionCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        void OnAddQuestion()
+        {
+            SelectedQuestion = new QuestionViewModel(new Question() { Answers = new List<Answer>(), Category = new Category() }, _questionRepo, _categoryRepo, _notificationService);
+            AllQuestions.Add(SelectedQuestion);
+            RaisePropertyChanged("SelectedQuestion");
+            RaisePropertyChanged("CanEditQuestion");          
         }
 
         void NotificationService_OnLoadingChanged(object sender, LoadingNotificationEventArgs e)
