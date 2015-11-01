@@ -65,6 +65,7 @@ namespace QuizApp.ViewModel
 
                 _currentQuestion = value;
                 RaisePropertyChanged();
+                RaisePropertyChanged("CurrentAnswers");
             }
         }
         public int TotalQuestions
@@ -138,6 +139,14 @@ namespace QuizApp.ViewModel
                 RaisePropertyChanged();
             }
         }
+        public IEnumerable<Answer> CurrentAnswers
+        {
+            get
+            {
+                return CurrentQuestion.Answers.Shuffle(new Random());
+            }
+        }
+
 
         readonly IWindowService _windowService;
         #endregion
@@ -193,6 +202,7 @@ namespace QuizApp.ViewModel
                 CurrentQuestion = _questions.Peek();
                 CurrentQuestionCount++;
                 RaisePropertyChanged("CurrentQuestion");
+                RaisePropertyChanged("CurrentAnswers");
             }
             else
             {
