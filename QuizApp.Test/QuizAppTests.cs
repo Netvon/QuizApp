@@ -284,10 +284,10 @@ namespace QuizApp.Test
             var mock = new Mock<IRepository<Question>>();
             var mockCat = new Mock<IRepository<Category>>();
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             
-            q.Text = "";
+            
             var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object, mockNS.Object);
 
             Assert.AreEqual(false, Questionvm.CanAddQuestion());
@@ -300,7 +300,7 @@ namespace QuizApp.Test
             var mock = new Mock<IRepository<Question>>();
             var mockCat = new Mock<IRepository<Category>>();
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             q.Text = "asdasf";
             var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object, mockNS.Object);
@@ -315,50 +315,11 @@ namespace QuizApp.Test
             var mock = new Mock<IRepository<Question>>();
             var mockCat = new Mock<IRepository<Category>>();
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             q.Answers.Add(new Answer() { IsCorrect = false });
             q.Text = "asdasf";
             var Questionvm = new QuestionViewModel(q, mock.Object, mockCat.Object, mockNS.Object);
-
-            Assert.AreEqual(false, Questionvm.CanAddQuestion());
-        }
-
-        [TestMethod]
-        [TestCategory("QuestionViewModel")]
-        public void QuestionViewModel_AddQuestion_CannotAddQuestionAlreadyExists()
-        {
-            var mock = new Mock<IRepository<Question>>();
-            var mockCat = new Mock<IRepository<Category>>();
-
-            var answers = new List<Answer>()
-            {
-                new Answer() { AnswerText = "Answer1", IsCorrect = true },
-                new Answer() { AnswerText = "Answer2", IsCorrect = false },
-                new Answer() { AnswerText = "Answer3", IsCorrect = true },
-                
-            };
-
-            var q = new Question();
-            q.Answers = new List<Answer>();
-            q.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
-            q.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
-            q.Answers.Add(new Answer() { AnswerText = "Answer3", IsCorrect = true });
-            q.Text = "asdasf";
-
-            var list = new List<Question>();
-            list.Add(q);
-
-            var w = new Question();
-            w.Text = "asdasf";
-            w.Answers = new List<Answer>();
-            w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
-            w.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
-            w.Answers.Add(new Answer() { AnswerText = "Answer3", IsCorrect = false });
-
-            var Questionvm = new QuestionViewModel(w, mock.Object, mockCat.Object, mockNS.Object);
-
-            mock.Setup(r => r.GetAllItems()).Returns(list);
 
             Assert.AreEqual(false, Questionvm.CanAddQuestion());
         }
@@ -378,7 +339,7 @@ namespace QuizApp.Test
                 
             };
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             q.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
             q.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
@@ -388,7 +349,7 @@ namespace QuizApp.Test
             var list = new List<Question>();
             list.Add(q);
 
-            var w = new Question();
+            var w = new Question() { Category = new Category() { Name = "" } };
             w.Text = "asdasdasf";
             w.Answers = new List<Answer>();
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
@@ -419,7 +380,7 @@ namespace QuizApp.Test
                 
             };
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             q.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
             q.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
@@ -429,7 +390,7 @@ namespace QuizApp.Test
             var list = new List<Question>();
             list.Add(q);
 
-            var w = new Question();
+            var w = new Question() { Category = new Category() { Name = "" } };
             w.Text = "asdasdasf";
             w.Answers = new List<Answer>();
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
@@ -456,7 +417,7 @@ namespace QuizApp.Test
                 
             };
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             q.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
             q.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
@@ -466,7 +427,7 @@ namespace QuizApp.Test
             var list = new List<Question>();
             list.Add(q);
 
-            var w = new Question();
+            var w = new Question() { Category = new Category() { Name = "" } };
             w.Text = "asdasdasf";
             w.Answers = new List<Answer>();
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
@@ -495,7 +456,7 @@ namespace QuizApp.Test
                 
             };
 
-            var q = new Question();
+            var q = new Question() { Category = new Category() { Name = "" } };
             q.Answers = new List<Answer>();
             q.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });
             q.Answers.Add(new Answer() { AnswerText = "Answer2", IsCorrect = false });
@@ -505,7 +466,7 @@ namespace QuizApp.Test
             var list = new List<Question>();
             list.Add(q);
 
-            var w = new Question();
+            var w = new Question() { Category = new Category() { Name = "" } };
             w.Text = "asdasdasf";
             w.Answers = new List<Answer>();
             w.Answers.Add(new Answer() { AnswerText = "Answer1", IsCorrect = true });

@@ -156,7 +156,7 @@
 									</Grid.ColumnDefinitions>
 
 									<Label Content="{Binding AnswerText}" Grid.Column="0" Padding="0"/>
-									<CheckBox Content="Is juist" IsChecked="{Binding IsCorrect}" IsEnabled="{Binding CanUncheck, UpdateSourceTrigger=PropertyChanged}" 
+									<CheckBox Content="Is juist" IsChecked="{Binding IsCorrect}" 
                                               Grid.Column="1"/>
 								</Grid>
 							</DataTemplate>
