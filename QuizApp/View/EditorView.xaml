@@ -78,8 +78,8 @@
 				</Grid>
 
 			</TabItem>
-			<TabItem Header="Vragen overzicht">
-				<local:QuestionEditor />
+			<TabItem Header="Vragen overzicht" Padding="8">
+				<local:QuestionEditor Padding="16"/>
 			</TabItem>
 			<TabItem Header="Categoriën overzicht" Padding="8">
 				<local:CategoryEditor Padding="16"
