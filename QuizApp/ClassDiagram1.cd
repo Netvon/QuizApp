@@ -1,173 +1,238 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="QuizApp.App" Collapsed="true">
-    <Position X="9.25" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>App.xaml.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="QuizApp.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.75" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MainWindow.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="QuizApp.Helpers.CanOpenWindowEventArgs" Collapsed="true">
-    <Position X="11" Y="0.5" Width="1.5" />
+    <Position X="3" Y="13.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAgAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Helpers\CanOpenWindowEventArgs.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="QuizApp.Helpers.WpfWindowService" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.25" Y="3.5" Width="1.5" />
+    <Position X="3" Y="12.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAACAAAACAAAAAAAAAAAAAAAAAABQAAA=</HashCode>
+      <HashCode>MAAACAAAEAAAAACAAAACAAAAAAAAAAAAAAAAAABQAAA=</HashCode>
       <FileName>Helpers\WpfWindowService.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <Lollipop Position="0.164" />
   </Class>
   <Class Name="QuizApp.Model.Answer">
-    <Position X="5" Y="5.75" Width="1.5" />
+    <Position X="17.75" Y="20.5" Width="1.5" />
+    <AssociationLine Name="AnswerToQuestion" Type="QuizApp.Model.Question" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="18.438" Y="20.5" />
+        <Point X="18.438" Y="19.449" />
+        <Point X="19.938" Y="19.449" />
+        <Point X="19.938" Y="19.074" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>BAIAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAA=</HashCode>
       <FileName>Model\Answer.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="AnswerToQuestion" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="QuizApp.Model.Category">
-    <Position X="7.75" Y="8" Width="1.5" />
+    <Position X="22" Y="16.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Model\Category.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="QuizApp.Model.DatabaseCategoryRepository" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="14.5" Y="0.5" Width="1.5" />
+    <Position X="17.25" Y="14.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAQCAAAAAAAAAAA=</HashCode>
       <FileName>Model\DatabaseCategoryRepository.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <ShowAsAssociation>
+      <Field Name="_database" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.224" />
   </Class>
   <Class Name="QuizApp.Model.DatabaseQuestionRepository" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="7.5" Y="1.5" Width="1.5" />
+    <Position X="17.25" Y="15.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAQCAAAAAAAAAAA=</HashCode>
       <FileName>Model\DatabaseQuestionRepository.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <ShowAsAssociation>
+      <Field Name="_database" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="QuizApp.Model.DatabaseQuizRepository" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="9.25" Y="1.5" Width="1.5" />
+    <Position X="17.25" Y="13.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAQCAAAAAAAAAAA=</HashCode>
       <FileName>Model\DatabaseQuizRepository.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <ShowAsAssociation>
+      <Field Name="_database" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="QuizApp.Model.Question">
-    <Position X="7.75" Y="5.75" Width="1.5" />
+    <Position X="19.5" Y="16.75" Width="1.5" />
+    <AssociationLine Name="Answers" Type="QuizApp.Model.Answer" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="20.312" Y="19.074" />
+        <Point X="20.312" Y="20.938" />
+        <Point X="19.25" Y="20.938" />
+      </Path>
+    </AssociationLine>
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAAAAAAAAAAAACACAAAAAAQAAACAAACAA=</HashCode>
+      <HashCode>BAAAAAAAAAAAAAAAgAAAAAACACAAAIAAQAAACAAACAA=</HashCode>
       <FileName>Model\Question.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Category" />
+    </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Answers" />
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="QuizApp.Model.Quiz">
-    <Position X="13.75" Y="6.25" Width="1.5" />
+    <Position X="13.75" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AABAAAAAAAAAAAAAgAAAAAAAAAAAAIAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\Quiz.cs</FileName>
     </TypeIdentifier>
     <ShowAsCollectionAssociation>
       <Property Name="Questions" />
     </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="QuizApp.Model.QuizContext" Collapsed="true">
-    <Position X="9.25" Y="2.5" Width="1.5" />
+  <Class Name="QuizApp.Model.QuizContext">
+    <Position X="20.75" Y="13.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAEAAEAAAAAAAAAAA=</HashCode>
       <FileName>Model\QuizContext.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="QuizApp.Model.QuizQuestion">
-    <Position X="11.25" Y="5.75" Width="1.5" />
+    <Position X="16.5" Y="16.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BABAAAAAAAAAAAEAAAAAACAAAAAAAAAEAAAAAAQAAAA=</HashCode>
+      <HashCode>BABAAAAAAAAAAAEAgAAAACAAAAAAAIAEAAAAAAQAAAA=</HashCode>
       <FileName>Model\QuizQuestion.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Question" />
+      <Property Name="Quiz" />
+      <Property Name="GivenAnswer" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="QuizApp.Properties.Resources" Collapsed="true">
-    <Position X="12.75" Y="2.5" Width="1.5" />
+  <Class Name="QuizApp.ViewModel.CategoryViewModel">
+    <Position X="5.25" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="QuizApp.Properties.Settings" Collapsed="true">
-    <Position X="14.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="QuizApp.ViewModel.CategoryViewModel" Collapsed="true">
-    <Position X="5" Y="2" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAQAAAAAAAAAQAAgAAAAAAAAAAAAEAIAA=</HashCode>
+      <HashCode>AAAAAAAAEAQAQAAAAAAAAAQAAgAAAAAAAAAAAAEAIAA=</HashCode>
       <FileName>ViewModel\CategoryViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="QuizApp.ViewModel.MainViewModel" Collapsed="true">
-    <Position X="11" Y="1.5" Width="1.5" />
+  <Class Name="QuizApp.ViewModel.MainViewModel">
+    <Position X="13" Y="3.25" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AgAAAAAAAABBAAAAAAAAAACCAAAAEAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>BAgAIAAAAAABAAAAAAAgEQAAAAAAAAAAAAAAAAAAAAg=</HashCode>
       <FileName>ViewModel\MainViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="QuizApp.ViewModel.POCOViewModel&lt;T&gt;" Collapsed="true">
-    <Position X="2.75" Y="0.5" Width="1.5" />
+  <Class Name="QuizApp.ViewModel.POCOViewModel&lt;T&gt;">
+    <Position X="3" Y="0.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ViewModel\POCOViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="QuizApp.ViewModel.QuestionViewModel" Collapsed="true">
-    <Position X="0.5" Y="2" Width="1.5" />
+  <Class Name="QuizApp.ViewModel.QuestionViewModel">
+    <Position X="0.5" Y="3.25" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAgABAAAAAAAAAAAAAAAAAAAQAAACAAACAA=</HashCode>
+      <HashCode>AAAAAAAAEAgABCAAAAAAAAAAAQEAAAAAQAAAiAAACAA=</HashCode>
       <FileName>ViewModel\QuestionViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="QuizApp.ViewModel.QuizViewModel" Collapsed="true">
-    <Position X="2.75" Y="2" Width="1.5" />
+  <Class Name="QuizApp.ViewModel.QuizViewModel">
+    <Position X="2.75" Y="3.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAEAAAQAAEAAAA=</HashCode>
+      <HashCode>AAAAYgBAEAABHCAAAAEBgAQAAQEAAAAEAAAQAAkBAAA=</HashCode>
       <FileName>ViewModel\QuizViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="QuizApp.ViewModel.ViewModelLocator" Collapsed="true">
-    <Position X="7.5" Y="3.5" Width="1.5" />
+  <Class Name="QuizApp.ViewModel.ViewModelLocator">
+    <Position X="7.5" Y="0.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABEAAAAA=</HashCode>
       <FileName>ViewModel\ViewModelLocator.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Interface Name="QuizApp.Helpers.IWindowService" Collapsed="true">
-    <Position X="9.25" Y="4.75" Width="1.5" />
+  <Class Name="QuizApp.Helpers.EnumerableExtentions">
+    <Position X="0.5" Y="15.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAA=</HashCode>
+      <FileName>Helpers\EnumerableExtentions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.LoadingNotificationEventArgs" Collapsed="true">
+    <Position X="8.25" Y="13.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Helpers\LoadingNotificationEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.MessageNotificationEventArgs" Collapsed="true">
+    <Position X="8.25" Y="14.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAABAAA=</HashCode>
+      <FileName>Helpers\MessageNotificationEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.MessageReceivedEventArgs" Collapsed="true">
+    <Position X="8.25" Y="15.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAIAAA=</HashCode>
+      <FileName>Helpers\MessageReceivedEventArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.Helpers.WpfNotificationService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAQAAQACAAIAgAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Helpers\WpfNotificationService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="QuizApp.ViewModel.EditorViewModel">
+    <Position X="9.75" Y="3.25" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAQgIAEABBAACNgAiCABQAECAAAAABBIgQAQkAAgA=</HashCode>
+      <FileName>ViewModel\EditorViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QuizApp.ViewModel.GameViewModel">
+    <Position X="7.5" Y="3.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAYABBAAYAAoAAIIAKAAAAAAAgKARhAQBAAA=</HashCode>
+      <FileName>ViewModel\GameViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="QuizApp.Helpers.IWindowService">
+    <Position X="0.5" Y="12.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>MAAACAAAEAAAAACAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Helpers\IWindowService.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="QuizApp.Model.IRepository&lt;T&gt;" Collapsed="true">
-    <Position X="7.5" Y="4.75" Width="1.5" />
+  <Interface Name="QuizApp.Model.IRepository&lt;T&gt;">
+    <Position X="15.5" Y="13.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAIAAgAAAAAAAAAAABAAAAMAAAAACAAAAAAAAAAA=</HashCode>
       <FileName>Model\IRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="QuizApp.Helpers.INotificationService">
+    <Position X="5.75" Y="12.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAgAAAAAAAQAAQACAAIAgAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Helpers\INotificationService.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

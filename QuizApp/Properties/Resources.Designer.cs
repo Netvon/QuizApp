@@ -59,5 +59,15 @@ namespace QuizApp.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] segmdl2 {
+            get {
+                object obj = ResourceManager.GetObject("segmdl2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

@@ -33,6 +33,18 @@ namespace QuizApp.ViewModel
             }
         }
 
+        public string CategoryName
+        {
+            get
+            {
+                return POCO.CategoryName;
+            }
+            set
+            {
+                POCO.CategoryName = value;
+                RaisePropertyChanged();
+            }
+        }
         public CategoryViewModel Category
         {
             get
@@ -42,7 +54,8 @@ namespace QuizApp.ViewModel
             set
             {
                 _category = value;
-                RaisePropertyChanged();
+                CategoryName = _category.Name;
+                RaisePropertyChanged("Category");
             }
         }
 
@@ -92,12 +105,12 @@ namespace QuizApp.ViewModel
 
         public bool CanAddQuestion()
         {
-            if (string.IsNullOrEmpty(Text) || !Answers.AsQueryable().Any(r => r.IsCorrect) || !Answers.AsQueryable().Any(r => !r.IsCorrect))
+            if (string.IsNullOrEmpty(Text) || !POCO.Answers.AsQueryable().Any(r => r.IsCorrect) || !POCO.Answers.AsQueryable().Any(r => !r.IsCorrect))
             {
                 return false;
             }
 
-            if(_questionRepo.GetAllItems().AsQueryable().Any(r => r.Text.ToLower().Equals(Text.ToLower())) || Answers.Count() > 4 || Answers.Count() < 2) 
+            if (Answers.Count() > 4 || Answers.Count() < 2)
             {
                 return false;
             }

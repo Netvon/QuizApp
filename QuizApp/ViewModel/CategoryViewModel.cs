@@ -66,7 +66,7 @@ namespace QuizApp.ViewModel
 
         bool CanAddCategory()
         {
-            if (string.IsNullOrEmpty(Name) || _categoryRepo.AsQueryable().Any(c => c.Name == Name))
+            if (string.IsNullOrWhiteSpace(Name) || _categoryRepo.AsQueryable().Any(c => c.Name == Name))
                 return false;
 
             return true;

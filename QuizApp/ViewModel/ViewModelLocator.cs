@@ -47,20 +47,19 @@ namespace QuizApp.ViewModel
             SimpleIoc.Default.Register<IWindowService, WpfWindowService>();
             SimpleIoc.Default.Register<INotificationService, WpfNotificationService>();
 
-            
+
 
             SimpleIoc.Default.Register<QuizContext>();
 
-            if(ViewModelBase.IsInDesignModeStatic)
-                SimpleIoc.Default.Register<IRepository<Category>, DesignTimeCategoryRepository>();
-            else
-                SimpleIoc.Default.Register<IRepository<Category>, DatabaseCategoryRepository>();
+            
+            SimpleIoc.Default.Register<IRepository<Category>, DatabaseCategoryRepository>();
 
             SimpleIoc.Default.Register<IRepository<Question>, DatabaseQuestionRepository>();
             SimpleIoc.Default.Register<IRepository<Quiz>, DatabaseQuizRepository>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<EditorViewModel>();
+            //SimpleIoc.Default.Register<GameViewModel>();
 
         }
 
@@ -79,6 +78,14 @@ namespace QuizApp.ViewModel
                 return ServiceLocator.Current.GetInstance<EditorViewModel>();
             }
         }
+
+        //public GameViewModel Game
+        //{
+        //    get
+        //    {
+        //        return ServiceLocator.Current.GetInstance<GameViewModel>();
+        //    }
+        //}
 
         public static void Cleanup()
         {

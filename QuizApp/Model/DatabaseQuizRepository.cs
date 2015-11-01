@@ -49,15 +49,20 @@ namespace QuizApp.Model
 
         public async Task SaveAsync()
         {
-#if DEBUG
-            await Task.Delay(4000);
-#endif
+//#if DEBUG
+//            await Task.Delay(4000);
+//#endif
             await _database.SaveChangesAsync();
         }
 
         public IQueryable<Quiz> AsQueryable()
         {
             return _database.Quizes.AsQueryable();
+        }
+
+        public void AddAnswer(Answer answer)
+        {
+
         }
     }
 }

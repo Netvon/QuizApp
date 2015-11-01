@@ -19,6 +19,7 @@
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="40"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="100*"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
@@ -43,7 +44,32 @@
 
         </Grid>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+
+            </Grid.ColumnDefinitions>
+            <ComboBox ItemsSource="{Binding AllCategories}" SelectedItem="{Binding SelectedQuestion.Category, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+        <StackPanel HorizontalAlignment="Left">
+            
+            <StackPanel Orientation="Horizontal" >
+                <Label Content="Categorie: " Margin="0" Padding="0" Opacity="0.5"/>
+                <Label Content="{Binding Name}" Margin="0" Padding="0" Opacity="0.5"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+                
+            </ComboBox >
+        </Grid>
+        
+        <Grid Grid.Row="2">
             <Grid Margin="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="40"/>
@@ -51,14 +77,14 @@
                     <ColumnDefinition Width="80"/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="Naam" FontSize="10.667" VerticalAlignment="Center" Padding="0" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+                <Label Content="Vraag:" FontSize="10.667" VerticalAlignment="Center" Padding="0" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
                 <TextBox Text="{Binding SelectedQuestion.Text}" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="40,0,0,0" 
 						 IsReadOnly="{Binding CanEditQuestion}"/>
-                <Button Command="{Binding AddQuestionCommand }" Content="Toevoegen" Grid.Column="2" Margin="8,0,0,0"/>
+                <!--<Button Command="{Binding AddQuestionCommand }" Content="Toevoegen" Grid.Column="2" Margin="8,0,0,0"/>-->
             </Grid>
         </Grid>
         
-        <Grid Grid.Row="2" Margin="8">
+        <Grid Grid.Row="3" Margin="8">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
@@ -78,7 +104,7 @@
                                     ToolTip="Klik hier om een nieuwe Question toe te voegen"/>
         </Grid>
 
-        <Grid Grid.Row="3" Margin="8">
+        <Grid Grid.Row="4" Margin="8">
             <Border Padding="0,0,0,0" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
 					BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="1" >
                 <Grid>
@@ -92,7 +118,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label Content="{Binding AnswerText}" Grid.Column="0"></Label>
-                                    <CheckBox Content="IsCorrect" IsChecked="{Binding IsCorrect}" Grid.Column="1"></CheckBox>
+                                    <CheckBox Content="IsCorrect" IsChecked="{Binding IsCorrect}" IsEnabled="{Binding CanUncheck, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"></CheckBox>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -102,7 +128,7 @@
 
             </Border>
         </Grid>
-        <Grid Grid.Row="4">
+        <Grid Grid.Row="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"></ColumnDefinition>
             </Grid.ColumnDefinitions>

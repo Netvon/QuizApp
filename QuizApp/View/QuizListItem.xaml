@@ -8,10 +8,12 @@
     <Grid>
         <StackPanel>
             <Label Content="{Binding Name}" Padding="0" />
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Aantal vragen: " Padding="0" FontSize="9.333"/>
-                <Label Content="{Binding Questions.Count}" Padding="0" FontSize="9.333"/>
-            </StackPanel>
+            <!--<StackPanel Orientation="Horizontal">
+                <Label Content="Aantal vragen: " Padding="0" FontSize="9.333"
+                        Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                <Label Content="{Binding Questions.Count}" Padding="0" FontSize="9.333"
+                        Foreground="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+            </StackPanel>-->
         </StackPanel>
     </Grid>
 </UserControl>

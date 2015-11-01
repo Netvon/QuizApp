@@ -16,23 +16,18 @@ using System.Windows.Shapes;
 namespace QuizApp.View
 {
     /// <summary>
-    /// Interaction logic for EditorView.xaml
+    /// Interaction logic for GameView.xaml
     /// </summary>
-    public partial class EditorView : Window
+    public partial class GameView : Window
     {
-        public EditorView()
+        public GameView()
         {
             InitializeComponent();
         }
 
         void Window_Closed(object sender, EventArgs e)
         {
-            Messenger.Default.Send(new NotificationMessage("EditorViewClosed"));
-        }
-
-        private void QuizEditor_Loaded(object sender, RoutedEventArgs e)
-        {
-
+            Messenger.Default.Send(new NotificationMessage("GameViewClosed"));
         }
     }
 }

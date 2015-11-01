@@ -49,5 +49,10 @@ namespace QuizApp.Model
         {
             return _database.Categories.AsQueryable();
         }
+
+        public void AddAnswer(Answer Answer)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
