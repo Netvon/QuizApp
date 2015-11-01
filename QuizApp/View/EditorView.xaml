@@ -74,11 +74,11 @@
 												 UpdateSourceTrigger=PropertyChanged, 
 												 Mode=TwoWay}"
 								  Padding="16" Grid.Row="2" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-									  IsEnabled="{Binding Editor.CanEditQuiz, Source={StaticResource Locator}}" Loaded="QuizEditor_Loaded"/>
+									  IsEnabled="{Binding Editor.CanEditQuiz, Source={StaticResource Locator}}"/>
 				</Grid>
 
 			</TabItem>
-			<TabItem Header="Vragen">
+			<TabItem Header="Vragen overzicht">
 				<local:QuestionEditor />
 			</TabItem>
 			<TabItem Header="Categoriën overzicht" Padding="8">

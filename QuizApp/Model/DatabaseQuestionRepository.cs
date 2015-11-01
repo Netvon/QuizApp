@@ -19,11 +19,6 @@ namespace QuizApp.Model
             _database.Questions.Add(item);
         }
 
-        public void AddAnswer(Answer item)
-        {
-            _database.Answers.Add(item);
-        }
-
         public void Edit(Question oldItem, Question newItem)
         {
             var cat = _database.Questions.FirstOrDefault(c => c.QuestionID == oldItem.QuestionID);

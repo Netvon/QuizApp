@@ -59,10 +59,5 @@ namespace QuizApp.Model
         {
             return _database.Quizes.AsQueryable();
         }
-
-        public void AddAnswer(Answer answer)
-        {
-
-        }
     }
 }

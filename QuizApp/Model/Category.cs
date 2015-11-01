@@ -13,7 +13,5 @@ namespace QuizApp.Model
     {
         [Key]
         public string Name { get; set; }
-
-
     }
 }
