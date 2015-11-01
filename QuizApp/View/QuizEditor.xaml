@@ -4,80 +4,80 @@
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
 			 xmlns:local="clr-namespace:QuizApp.View"
-	xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+	         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
 			 x:Class="QuizApp.View.QuizEditor"
 			 mc:Ignorable="d" 
 			 d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <DataTemplate x:Key="QuestionWithoutInfoDataTemplate">
-            <local:QuestionListItem DetailsVisibility="Collapsed"/>
-        </DataTemplate>
-        <DataTemplate x:Key="QuestionWithInfoDataTemplate">
-            <local:QuestionListItem />
-        </DataTemplate>
-    </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+	<UserControl.Resources>
+		<DataTemplate x:Key="QuestionWithoutInfoDataTemplate">
+			<local:QuestionListItem DetailsVisibility="Collapsed"/>
+		</DataTemplate>
+		<DataTemplate x:Key="QuestionWithInfoDataTemplate">
+			<local:QuestionListItem />
+		</DataTemplate>
+	</UserControl.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
-            <Grid Margin="0,0,0,8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+		<Grid Grid.Row="0">
+			<Grid Margin="0,0,0,8">
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="Auto"/>
+					<ColumnDefinition/>
+					<ColumnDefinition Width="Auto"/>
+				</Grid.ColumnDefinitions>
 
-                <Label Content="Naam" FontSize="10.667" VerticalAlignment="Center" Padding="8,0" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
-                <TextBox Text="{Binding Quiz.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="40,0,0,0" 
+				<Label Content="Naam" FontSize="10.667" VerticalAlignment="Center" Padding="8,0" Panel.ZIndex="1" HorizontalAlignment="Center" Foreground="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}"/>
+				<TextBox Text="{Binding Quiz.Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Grid.ColumnSpan="2" VerticalContentAlignment="Center" Padding="40,0,0,0" 
 						 IsReadOnly="{Binding Quiz.ExistsInDatabase}"/>
-                <Button Command="{Binding Quiz.AddQuizCommand }"  
+				<Button Command="{Binding Quiz.AddQuizCommand }"  
 						Grid.Column="2" Margin="8,0,0,0" Padding="8"
 						ToolTip="Klik hier om de nieuwe Quiz toe te voegen. Dit kan alleen als er nog geen Quiz met deze naam is en de Quiz minimaal twee vragen bevat"
 						Content="&#xE74E;"
-                        FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
+						FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 									TextOptions.TextFormattingMode="Display" FontSize="16"/>
-            </Grid>
-        </Grid>
+			</Grid>
+		</Grid>
 
-        <Grid Grid.Row="1" >
-            <Border Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" 
+		<Grid Grid.Row="1" >
+			<Border Background="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" 
 					BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" BorderThickness="1" SnapsToDevicePixels="True" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
 
-                    <Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,0,0,1" 
+					<Border BorderBrush="{DynamicResource {x:Static SystemColors.ActiveBorderBrushKey}}" BorderThickness="0,0,0,1" 
 							Grid.Row="0" SnapsToDevicePixels="True"
 							Padding="8">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto"/>
+								<RowDefinition Height="Auto"/>
+							</Grid.RowDefinitions>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
 
-                            <Button Command="{Binding Quiz.AddQuestionCommand}" 
+							<Button Command="{Binding Quiz.AddQuestionCommand}" 
 									Grid.Column="1" Content="&#xE710;" Margin="8,0,0,0"
 									ToolTip="Klik hier om de geselecteerde vraag toe te voegen aan deze Quiz."
 									Grid.Row="1" 
 									FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 									TextOptions.TextFormattingMode="Display" FontSize="13.333" Padding="8"/>
-                            <Button Command="{Binding Quiz.RemoveQuestionCommand}" 
+							<Button Command="{Binding Quiz.RemoveQuestionCommand}" 
 									Grid.Column="2" Content="&#xE74D;" Margin="8,0,0,0"
 									ToolTip="Klik hier om de geselecteerde vraag te verwijderen uit de Quiz."
 									 Grid.Row="1"
 									 FontFamily="/QuizApp;component/Resources/Fonts/#Segoe MDL2 Assets" 
 									TextOptions.TextFormattingMode="Display" FontSize="13.333" Padding="8"/>
-                            <toolkit:WatermarkComboBox ItemsSource="{Binding QuestionSource}" 
+							<toolkit:WatermarkComboBox ItemsSource="{Binding QuestionSource}" 
 							  SelectedItem="{Binding Quiz.SelectedDropdownQuestion }" 
 							  ItemTemplate="{DynamicResource QuestionWithoutInfoDataTemplate}"
 							  Grid.Column="0" Margin="0" 
@@ -85,21 +85,21 @@
 							  ToolTip="Selecteer hier een vraag om toe te voegen aan de Quiz. Klik na het selecteren op de plusknop om de vraag toe te voegen."
 									   Grid.Row="1"
 													   Watermark="Selecteer een vraag om toe te voegen"/>
-                        </Grid>
+						</Grid>
 
-                    </Border>
+					</Border>
 
-                    <ListView ItemsSource="{Binding Quiz.Questions }"
+					<ListView ItemsSource="{Binding Quiz.Questions }"
 						  ItemTemplate="{DynamicResource QuestionWithInfoDataTemplate}"
 						  SelectedItem="{Binding Quiz.SelectedListQuestion }" 
 						  Background="{x:Null}" 
 						  BorderBrush="{x:Null}"
 						  BorderThickness="0" Grid.Row="1"/>
-                </Grid>
+				</Grid>
 
-            </Border>
+			</Border>
 
-        </Grid>
+		</Grid>
 
-    </Grid>
+	</Grid>
 </UserControl>

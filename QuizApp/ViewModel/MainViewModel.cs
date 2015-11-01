@@ -6,23 +6,58 @@ using QuizApp.Model;
 using System.Collections.ObjectModel;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
+using GalaSoft.MvvmLight.Threading;
+using System.Collections.Generic;
+using System.Windows;
 
 namespace QuizApp.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
+        QuizViewModel _selectedQuiz;
         IWindowService _windowService;
+        Visibility _loadingVisibility;
 
         public RelayCommand OpenEditorCommand { get; set; }
         public RelayCommand OpenGameCommand { get; set; }
 
+        public Visibility LoadingVisibility
+        {
+            get
+            {
+                return _loadingVisibility;
+            }
+            set
+            {
+                _loadingVisibility = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public QuizViewModel SelectedQuiz
+        {
+            get
+            {
+                return _selectedQuiz;
+            }
+            set
+            {
+                _selectedQuiz = value;
+                RaisePropertyChanged("SelectedQuiz");
+                OpenGameCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IWindowService windowService)
+        public MainViewModel(IWindowService windowService, INotificationService notificationService)
         {
             _windowService = windowService;
             _windowService.OnCanOpenWindowChanged += WindowService_OnCanOpenWindowChanged;
+
+            LoadingVisibility = Visibility.Hidden;
 
             OpenEditorCommand = new RelayCommand(OnOpenEditor, CanOpenEditor);
             OpenGameCommand = new RelayCommand(OnOpenGame, CanOpenGame);
@@ -30,7 +65,8 @@ namespace QuizApp.ViewModel
 
         bool CanOpenGame()
         {
-            return _windowService.CanOpenWindow("GameView");
+            var quizRepo = SimpleIoc.Default.GetInstance<IRepository<Quiz>>();
+            return _windowService.CanOpenWindow("GameView") && SelectedQuiz != null && SelectedQuiz.ExistsInDatabase;
         }
 
         void OnOpenGame()
@@ -41,9 +77,7 @@ namespace QuizApp.ViewModel
             var noti = SimpleIoc.Default.GetInstance<INotificationService>();
             var win = SimpleIoc.Default.GetInstance<IWindowService>();
 
-            var qvm = new QuizViewModel(quizRepo.AsQueryable().First(), quizRepo, questionRepo, categoryRepo, noti);
-
-            _windowService.OpenWindow("GameView", new GameViewModel(qvm, quizRepo, questionRepo, categoryRepo, noti, win));
+            _windowService.OpenWindow("GameView", new GameViewModel(SelectedQuiz, quizRepo, questionRepo, categoryRepo, noti, win));
             OpenGameCommand.RaiseCanExecuteChanged();
         }
 

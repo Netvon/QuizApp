@@ -1,27 +1,62 @@
 ﻿<Window
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:QuizApp"
-        xmlns:v="clr-namespace:QuizApp.View"
-        x:Class="QuizApp.MainWindow"
-        mc:Ignorable="d"
-        Title="Kwisspel" Height="350" Width="525" 
-        DataContext="{Binding Main, Source={StaticResource Locator}}" Background="#FFFFF3BE">
-    <Grid Margin="8">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        
-        <Label Content="Kwisspel" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" Foreground="#FF643200" FontFamily="Segoe UI Semilight" RenderTransformOrigin="0.5,0.5"/>
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:QuizApp"
+		xmlns:view="clr-namespace:QuizApp.View"
+		xmlns:v="clr-namespace:QuizApp.View"
+		xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+		x:Class="QuizApp.MainWindow"
+		mc:Ignorable="d"
+		Title="Kwisspel" Height="350" Width="525" 
+		DataContext="{Binding Main, Source={StaticResource Locator}}" Background="#FFFFF3BE" MinWidth="525" MinHeight="350">
+	<Window.Resources>
+		<DataTemplate x:Key="QuizDataTemplate">
+			<view:QuizListItem/>
+		</DataTemplate>
+	</Window.Resources>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
 
-        <Button Command="{Binding OpenEditorCommand}" Content="Open editor" Grid.Column="0" Margin="0,0,4,0" Grid.Row="1"/>
-        <Button Command="{Binding OpenGameCommand}" Content="Open game" Grid.Column="1" Margin="4,0,0,0" Grid.Row="1"/>
-    </Grid>
+		<Label Content="Kwisspel"
+			   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48"
+			   Foreground="#FF643200"
+			   Padding="32"/>
+
+		<Border Grid.Row="1" Background="White"
+				Padding="32" BorderThickness="0,1,0,0"
+				BorderBrush="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"
+				SnapsToDevicePixels="True">
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
+				<Button Command="{Binding OpenEditorCommand}" Content="Beheren" Grid.Column="0" Margin="0,0,8,0"/>
+				<Grid Grid.Column="1" Margin="8,0,0,0">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+					<toolkit:WatermarkComboBox Watermark="Select een quiz om te spelen" Margin="0,0,0,8" Padding="8"
+											   ItemsSource="{Binding Editor.AllQuizes, Source={StaticResource Locator}}" 
+											   SelectedItem="{Binding SelectedQuiz, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+											   ItemTemplate="{StaticResource QuizDataTemplate}"/>
+					<Button Command="{Binding OpenGameCommand}" Content="Spelen" Grid.Row="1"/>
+				</Grid>
+
+			</Grid>
+		</Border>
+		<Grid Visibility="{Binding LoadingVisibility, FallbackValue=Hidden}" Background="#BF000000" Grid.RowSpan="2">
+			<StackPanel VerticalAlignment="Center" Margin="8">
+				<Label Content="Even geduld..." Foreground="White" HorizontalAlignment="Center" FontSize="13.333" FontWeight="Bold"/>
+				<ProgressBar IsIndeterminate="True"  MinHeight="20"/>
+			</StackPanel>
+		</Grid>
+	</Grid>
+	
 </Window>
