@@ -96,11 +96,25 @@ namespace QuizApp.ViewModel
                 
                 RaisePropertyChanged("SelectedQuestion");               
                 RaisePropertyChanged("CanEditQuestion");
+                RaisePropertyChanged("SelectedCategory");
                 RemoveQuestionCommand.RaiseCanExecuteChanged();
             }
         }
 
-        public String InputAnswer
+        public CategoryViewModel SelectedCategory
+        {
+            get
+            {
+                return SelectedQuestion.Category;
+            }
+            set
+            {
+                SelectedQuestion.Category = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public string InputAnswer
         {
             get
             {
@@ -294,33 +308,44 @@ namespace QuizApp.ViewModel
             NotificationVisibility = Visibility.Hidden;
         }
 
-        void OnSaveQuestion()
+        async void OnSaveQuestion()
         {
-            Category cat = new Category();
-            cat = SelectedQuestion.Category.POCO;
-            foreach (var c in AllCategories)
-            {
-                if (c.POCO.Name.Equals(SelectedQuestion.CategoryName))
-                {
-                    cat = c.POCO;
-                    break;
-                }
+            //Category cat = new Category();
+            //cat = SelectedQuestion.Category.POCO;
+            //foreach (var c in AllCategories)
+            //{
+            //    if (c.POCO.Name.Equals(SelectedQuestion.CategoryName))
+            //    {
+            //        cat = c.POCO;
+            //        break;
+            //    }
 
-            }
-            SelectedQuestion.POCO.Category = cat;
-            
+            //}
+
+            //SelectedQuestion.POCO.CategoryName = SelectedQuestion.Category.POCO.Name;            
             
             if (_questionRepo.GetAllItems().AsQueryable().Any(r => r.Text.Contains(SelectedQuestion.Text)))
             {
-                _questionRepo.SaveAsync();
-                _notificationService.DisplayMessage("QuizViewModel", "Vraag \"" + SelectedQuestion.Text + "\" opgeslagen.");
+                _notificationService.StartLoading("EditorViewModel");
+                await _questionRepo.SaveAsync();
+                _notificationService.StopLoading("EditorViewModel");
+
+                _notificationService.DisplayMessage("QuizViewModel", "Vraag \"" + SelectedQuestion.Text + "\" aangepast.");
             }
             else
             {
                 _questionRepo.Add(SelectedQuestion.POCO);
+
+                _notificationService.StartLoading("EditorViewModel");
+                await _questionRepo.SaveAsync();
+                _notificationService.StopLoading("EditorViewModel");
+
                 _notificationService.DisplayMessage("QuizViewModel", "Vraag \"" + SelectedQuestion.Text + "\" toegevoegd.");
+
             }
+
             
+
         }
         void OnAddQuiz()
         {
@@ -358,22 +383,34 @@ namespace QuizApp.ViewModel
             return (!string.IsNullOrEmpty(InputAnswer) && SelectedQuestion.Answers.Count() < 4 && !_selectedQuestion.Answers.AsQueryable().Any(r => r.AnswerText.Equals(InputAnswer)));
         }
 
-        void OnAddAnwer()
+        async void OnAddAnwer()
         {         
-            Answer = new Answer() { AnswerText = InputAnswer, AnswerToQuestion = SelectedQuestion.POCO, IsCorrect = false, QuestionID = SelectedQuestion.POCO.QuestionID };
+            Answer = new Answer() { AnswerText = InputAnswer,
+                                    AnswerToQuestion = SelectedQuestion.POCO,
+                                    IsCorrect = false,
+                                    QuestionID = SelectedQuestion.POCO.QuestionID };
+
             SelectedQuestion.POCO.Answers.Add(Answer);
-            _questionRepo.SaveAsync();
+
+            _notificationService.StartLoading("EditorViewModel");
+            await _questionRepo.SaveAsync();
+            _notificationService.StopLoading("EditorViewModel");
+
             SelectedQuestion.Answers.Add(Answer);
             Answer = new Answer() { AnswerText = "", AnswerToQuestion = SelectedQuestion.POCO, IsCorrect = false };
             InputAnswer = "";
             SaveQuestionCommand.RaiseCanExecuteChanged();
         }
 
-        void OnRemoveAnswer()
+        async void OnRemoveAnswer()
         {
            
             SelectedQuestion.POCO.Answers.Remove(Answer);
-            _questionRepo.SaveAsync();
+
+            _notificationService.StartLoading("EditorViewModel");
+            await _questionRepo.SaveAsync();
+            _notificationService.StopLoading("EditorViewModel");
+
             SelectedQuestion.Answers.Remove(Answer);
             Answer = new Answer();
             
@@ -398,7 +435,17 @@ namespace QuizApp.ViewModel
             {
                 SelectedQuestion.RemoveQuestionCommand.Execute(null);
                 AllQuestions.Remove(SelectedQuestion);
+
+                foreach (var quiz in AllQuizes.AsQueryable().Where(q => q.Questions.Contains(SelectedQuestion)))
+                {
+                    quiz.Questions.Remove(SelectedQuestion);
+                }
+
+                
                 SelectedQuestion = new QuestionViewModel(new Question() { Text = "", Answers = new List<Answer>(), Category = new Category() }, _questionRepo, _categoryRepo, _notificationService);
+                SelectedCategory = new CategoryViewModel(new Category(), _categoryRepo, _notificationService);
+                RaisePropertyChanged("SelectedCategory");
+
                 RemoveQuestionCommand.RaiseCanExecuteChanged();
             }
         }

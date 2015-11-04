@@ -55,6 +55,7 @@ namespace QuizApp.ViewModel
             {
                 _category = value;
                 CategoryName = _category.Name;
+                POCO.Category = _category.POCO;
                 RaisePropertyChanged("Category");
             }
         }
@@ -81,13 +82,18 @@ namespace QuizApp.ViewModel
            
             _questionRepo.Add(POCO);
 
+            _notificationService.StartLoading("QuestionViewModel");
             await _questionRepo.SaveAsync();
+            _notificationService.StopLoading("QuestionViewModel");
         }
 
         async void OnRemoveQuestion()
         {
             _questionRepo.Remove(POCO);
+
+            _notificationService.StartLoading("QuestionViewModel");
             await _questionRepo.SaveAsync();
+            _notificationService.StopLoading("QuestionViewModel");
         }
 
         public bool CanRemoveQuestion()
@@ -115,6 +121,30 @@ namespace QuizApp.ViewModel
                 return false;
             }
             return true;
+        }
+
+        // override object.Equals
+        public override bool Equals(object obj)
+        {
+            //       
+            // See the full list of guidelines at
+            //   http://go.microsoft.com/fwlink/?LinkID=85237  
+            // and also the guidance for operator== at
+            //   http://go.microsoft.com/fwlink/?LinkId=85238
+            //
+
+            if (obj == null || GetType() != obj.GetType())
+            {
+                return false;
+            }
+            var question = obj as QuestionViewModel;
+            return question.POCO == POCO;
+        }
+
+        // override object.GetHashCode
+        public override int GetHashCode()
+        {
+            return POCO.GetHashCode();
         }
     }
 }

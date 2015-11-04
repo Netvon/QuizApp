@@ -169,6 +169,9 @@ namespace QuizApp.ViewModel
             if (SelectedDropdownQuestion == null)
                 return false;
 
+            if (!_questionRepo.AsQueryable().Any(q => q.QuestionID == SelectedDropdownQuestion.POCO.QuestionID))
+                return false;
+
             if (Questions.Count >= 10 ||
                 Questions.Any(q => q.POCO.QuestionID == SelectedDropdownQuestion.POCO.QuestionID))
                 return false;
